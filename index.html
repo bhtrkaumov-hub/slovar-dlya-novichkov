@@ -1,0 +1,2168 @@
+<title>Словарь новичка</title>
+
+<style>
+  :root {
+    --ground:      #F5F8F7;
+    --surface:     #FFFFFF;
+    --surface-alt: #EDF3F1;
+    --ink:         #14201D;
+    --ink-soft:    #475B56;
+    --ink-faint:   #7A8C87;
+    --rule:        #D9E2DF;
+    --rule-soft:   #E8EEEC;
+    --accent:      #0D6B5F;
+    --accent-ink:  #0A544A;
+    --accent-soft: #E0EFEB;
+    --warn:        #8A5606;
+    --warn-soft:   #FAEFDB;
+    --shadow:      0 1px 2px rgba(20,32,29,.05), 0 8px 24px -16px rgba(20,32,29,.25);
+
+    --serif: Georgia, "Times New Roman", serif;
+    --sans: "Segoe UI", system-ui, -apple-system, sans-serif;
+    --mono: Consolas, "Cascadia Mono", "DejaVu Sans Mono", monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #0D1513;
+      --surface:     #141E1B;
+      --surface-alt: #18241F;
+      --ink:         #E5ECE9;
+      --ink-soft:    #A0B1AC;
+      --ink-faint:   #71827D;
+      --rule:        #23332E;
+      --rule-soft:   #1B2926;
+      --accent:      #5CC5B2;
+      --accent-ink:  #7FD6C6;
+      --accent-soft: #113029;
+      --warn:        #D9A445;
+      --warn-soft:   #2C2310;
+      --shadow:      0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:      #0D1513;
+    --surface:     #141E1B;
+    --surface-alt: #18241F;
+    --ink:         #E5ECE9;
+    --ink-soft:    #A0B1AC;
+    --ink-faint:   #71827D;
+    --rule:        #23332E;
+    --rule-soft:   #1B2926;
+    --accent:      #5CC5B2;
+    --accent-ink:  #7FD6C6;
+    --accent-soft: #113029;
+    --warn:        #D9A445;
+    --warn-soft:   #2C2310;
+    --shadow:      0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 60rem;
+    margin: 0 auto;
+    padding: 0 1.25rem 6rem;
+  }
+
+  /* ---------- шапка ---------- */
+
+  header.top {
+    padding: 3.5rem 0 2rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .eyebrow {
+    font-size: .75rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 .9rem;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(2.2rem, 6vw, 3.4rem);
+    line-height: 1.08;
+    letter-spacing: -.015em;
+    margin: 0 0 1rem;
+    text-wrap: balance;
+  }
+
+  .lede {
+    max-width: 34rem;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  /* ---------- поиск ---------- */
+
+  .searchbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--ground);
+    padding: 1rem 0 .85rem;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+  }
+
+  .field {
+    position: relative;
+    display: flex;
+  }
+
+  .field input {
+    flex: 1;
+    font: inherit;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: .6rem .8rem .6rem 2.1rem;
+  }
+
+  .field input::placeholder { color: var(--ink-faint); }
+
+  .field input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+    border-color: transparent;
+  }
+
+  .field .glass {
+    position: absolute;
+    left: .75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ink-faint);
+    pointer-events: none;
+    font-size: .95rem;
+  }
+
+  nav.jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+  }
+
+  nav.jump a {
+    font-size: .8rem;
+    text-decoration: none;
+    color: var(--ink-soft);
+    background: var(--surface-alt);
+    border: 1px solid transparent;
+    border-radius: 2px;
+    padding: .25rem .6rem;
+  }
+
+  nav.jump a:hover,
+  nav.jump a:focus-visible {
+    color: var(--accent-ink);
+    border-color: var(--accent);
+    outline: none;
+  }
+
+  /* ---------- цикл ---------- */
+
+  .cycle {
+    margin: 2.5rem 0 0;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    box-shadow: var(--shadow);
+    padding: 1.5rem 1.5rem 1.25rem;
+  }
+
+  .cycle h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.35rem;
+    margin: 0 0 .35rem;
+  }
+
+  .cycle p.sub {
+    margin: 0 0 1.25rem;
+    color: var(--ink-soft);
+    font-size: .93rem;
+  }
+
+  ol.steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .65rem;
+  }
+
+  ol.steps li {
+    display: grid;
+    grid-template-columns: 1.6rem minmax(0, 15rem) 1fr;
+    align-items: baseline;
+    gap: .75rem;
+  }
+
+  ol.steps .num {
+    font-family: var(--mono);
+    font-size: .8rem;
+    color: var(--accent);
+  }
+
+  ol.steps .what {
+    color: var(--ink-soft);
+    font-size: .9rem;
+  }
+
+  /* ---------- секции ---------- */
+
+  section.group { margin-top: 3.25rem; }
+
+  section.group > h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.6rem;
+    margin: 0 0 .3rem;
+    letter-spacing: -.01em;
+  }
+
+  section.group > p.groupnote {
+    margin: 0 0 1.4rem;
+    color: var(--ink-faint);
+    font-size: .88rem;
+  }
+
+  .entries {
+    display: grid;
+    gap: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .entry {
+    display: grid;
+    grid-template-columns: 14rem 1fr;
+    gap: 1.5rem;
+    padding: .95rem 0;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+
+  .entry .key { min-width: 0; }
+
+  .entry .ru {
+    font-weight: 600;
+    display: block;
+  }
+
+  .entry .en {
+    display: block;
+    font-size: .8rem;
+    color: var(--ink-faint);
+    font-style: italic;
+  }
+
+  code.chip {
+    font-family: var(--mono);
+    font-size: .88rem;
+    color: var(--accent-ink);
+    background: var(--accent-soft);
+    border-radius: 2px;
+    padding: .12rem .4rem;
+    display: inline-block;
+    overflow-wrap: anywhere;
+  }
+
+  .entry .def {
+    margin: 0;
+    min-width: 0;
+  }
+
+  .entry .def code {
+    font-family: var(--mono);
+    font-size: .88rem;
+    background: var(--surface-alt);
+    border-radius: 2px;
+    padding: .08rem .3rem;
+  }
+
+  .entry .ex {
+    display: block;
+    margin-top: .35rem;
+    font-size: .88rem;
+    color: var(--ink-soft);
+  }
+
+  .warnline {
+    display: block;
+    margin-top: .45rem;
+    font-size: .87rem;
+    color: var(--warn);
+    background: var(--warn-soft);
+    border-radius: 2px;
+    padding: .35rem .55rem;
+  }
+
+  .empty {
+    display: none;
+    padding: 2.5rem 0;
+    color: var(--ink-faint);
+    font-family: var(--serif);
+    font-size: 1.1rem;
+  }
+
+  footer.end {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+    color: var(--ink-faint);
+    font-size: .85rem;
+  }
+
+  @media (max-width: 44rem) {
+    .entry { grid-template-columns: 1fr; gap: .3rem; }
+    ol.steps li { grid-template-columns: 1.4rem 1fr; }
+    ol.steps .what { grid-column: 2; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="top">
+    <p class="eyebrow">HTML · CSS · JavaScript · Git</p>
+    <h1>Словарь новичка</h1>
+    <p class="lede">Все слова и команды, которые мы прошли. Забыл — открой и найди. Зубрить не надо, надо понимать.</p>
+  </header>
+
+  <div class="searchbar">
+    <div class="field">
+      <span class="glass">⌕</span>
+      <input id="q" type="search" placeholder="Найти слово или команду — например, commit" autocomplete="off">
+    </div>
+    <nav class="jump">
+      <a href="#files">Файлы</a>
+      <a href="#term">Терминал</a>
+      <a href="#html">HTML</a>
+      <a href="#git">Git</a>
+      <a href="#branch">Ветки</a>
+      <a href="#conflict">Конфликты</a>
+      <a href="#hub">GitHub</a>
+      <a href="#web">Сайт в интернете</a>
+      <a href="#oops">Ошибки</a>
+    </nav>
+  </div>
+
+  <div class="cycle">
+    <h2>Новый проект с нуля</h2>
+    <p class="sub">Делается один раз на проект. Именно поэтому забывается — подглядывай сюда.</p>
+    <ol class="steps">
+      <li><span class="num">1</span><code class="chip">mkdir imya</code><span class="what">создать папку. Своя, не внутри другого репозитория</span></li>
+      <li><span class="num">2</span><code class="chip">cd .\imya\</code><span class="what">зайти в неё</span></li>
+      <li><span class="num">3</span><code class="chip">git init</code><span class="what">поставить Git</span></li>
+      <li><span class="num">4</span><code class="chip">notepad .gitignore</code><span class="what">сразу, до первого коммита</span></li>
+      <li><span class="num">5</span><code class="chip">git add .</code><span class="what">взять все файлы разом</span></li>
+      <li><span class="num">6</span><code class="chip">git commit -m "pervaya versiya"</code><span class="what">сохранить в историю</span></li>
+      <li><span class="num">7</span><span class="what" style="grid-column:2/4">на сайте: <strong>github.com/new</strong> → имя → Public → README <strong>выключить</strong> → Create</span></li>
+      <li><span class="num">8</span><code class="chip">git remote add origin АДРЕС</code><span class="what">адрес вида https://github.com/ИМЯ/ПАПКА.git</span></li>
+      <li><span class="num">9</span><code class="chip">git push -u origin master</code><span class="what">первая отправка, с <code>-u</code></span></li>
+      <li><span class="num">10</span><span class="what" style="grid-column:2/4">включить сайт: <strong>Settings → Pages → Branch: master, / (root) → Save</strong></span></li>
+    </ol>
+    <p class="sub" style="margin:1.25rem 0 0">Через 1–2 минуты сайт живёт по адресу <code>https://ИМЯ-АККАУНТА.github.io/ИМЯ-РЕПОЗИТОРИЯ/</code>. Главный файл обязан называться <code>index.html</code>.</p>
+  </div>
+
+  <div class="cycle">
+    <h2>Ежедневный цикл</h2>
+    <p class="sub">Четыре команды по порядку. Так сохраняют работу каждый день.</p>
+    <ol class="steps">
+      <li><span class="num">1</span><code class="chip">git status</code><span class="what">посмотреть, что изменилось</span></li>
+      <li><span class="num">2</span><code class="chip">git add имя-файла</code><span class="what">выбрать файл — «положить в чемодан»</span></li>
+      <li><span class="num">3</span><code class="chip">git commit -m "подпись"</code><span class="what">сохранить на компьютере</span></li>
+      <li><span class="num">4</span><code class="chip">git push</code><span class="what">отправить на GitHub</span></li>
+    </ol>
+  </div>
+
+  <!-- ================= ФАЙЛЫ ================= -->
+  <section class="group" id="files">
+    <h2>Компьютер и файлы</h2>
+    <p class="groupnote">Самая основа. С этого начинали.</p>
+    <div class="entries">
+
+      <div class="entry">
+        <div class="key"><span class="ru">Файл</span><span class="en">file</span></div>
+        <p class="def">Документ на компьютере. У него есть имя и расширение.
+          <span class="ex">Аналогия: лист бумаги.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Папка</span><span class="en">folder</span></div>
+        <p class="def">Ящик, в котором лежат файлы. Внутри папки могут быть другие папки.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Расширение</span><span class="en">extension</span></div>
+        <p class="def">То, что после точки в имени файла: <code>.html</code>, <code>.md</code>, <code>.txt</code>. Говорит компьютеру, что это за документ.
+          <span class="ex">Без расширения компьютер не знает, чем открывать файл.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Путь</span><span class="en">path</span></div>
+        <p class="def">Адрес файла или папки. Читается слева направо, как дорога.
+          <span class="ex"><code>C:\Users\User\uroki</code> — диск C, папка Users, внутри User, внутри uroki.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Браузер</span><span class="en">browser</span></div>
+        <p class="def">Программа для просмотра сайтов: Chrome, Edge, Firefox. Читает файл <code>.html</code> и рисует из него страницу.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Кодировка</span><span class="en">encoding</span></div>
+        <p class="def">Способ превращать буквы в числа — компьютер хранит только числа. <code>utf-8</code> понимает все языки мира, поэтому её ставят всегда.
+          <span class="ex">Без неё вместо русских букв — «кракозябры».</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Скрытая папка</span></div>
+        <p class="def">Папка, которую проводник не показывает. Обычно служебная. Например <code>.git</code> — там Git хранит историю.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Имена файлов</span></div>
+        <p class="def">Латиницей, без пробелов. Вместо пробела дефис <code>-</code> или подчёркивание <code>_</code>.
+          <span class="ex">Если пробелы всё же есть — путь в кавычках: <code>cd '.\MOYA PAPKA\'</code></span></p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= ТЕРМИНАЛ ================= -->
+  <section class="group" id="term">
+    <h2>Терминал</h2>
+    <p class="groupnote">Проводник — показывать пальцем. Терминал — говорить словами.</p>
+    <div class="entries">
+
+      <div class="entry">
+        <div class="key"><span class="ru">Терминал</span><span class="en">terminal</span></div>
+        <p class="def">Окно, где говоришь с компьютером текстом. Печатаешь команду — жмёшь Enter — получаешь ответ.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">PowerShell</span></div>
+        <p class="def">Современный терминал Windows. Знает <code>pwd</code>, <code>ls</code>, <code>cd</code> — те же команды, что на Linux и Mac.
+          <span class="ex">Открыть: <code>Win + R</code> → напечатать <code>powershell</code> → Enter.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">cmd</span></div>
+        <p class="def">Старый терминал Windows, из 90-х. Команду <code>pwd</code> не знает. Пользуемся PowerShell.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Приглашение</span><span class="en">prompt</span></div>
+        <p class="def">Строка вида <code>PS C:\Users\User&gt;</code> — компьютер говорит, где он сейчас, и ждёт команду. Всё, что после <code>&gt;</code>, печатаешь ты.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Опция</span><span class="en">option</span></div>
+        <p class="def">Уточнение к команде. Пишется через два дефиса.
+          <span class="ex"><code>git log --oneline</code> — «покажи журнал, но коротко».</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">pwd</code><span class="en">print working directory</span></div>
+        <p class="def"><strong>Где я?</strong> Показывает адрес текущей папки.
+          <span class="ex">Аналогия: прочитать табличку на двери.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">ls</code><span class="en">list</span></div>
+        <p class="def"><strong>Что тут лежит?</strong> Показывает список файлов и папок. Смотри на столбец <code>Name</code>.
+          <span class="ex">Аналогия: оглядеть комнату.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">cd имя</code><span class="en">change directory</span></div>
+        <p class="def">Зайти внутрь папки.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">cd ..</code></div>
+        <p class="def">Выйти наружу, на уровень выше. Как из комнаты в коридор.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">mkdir имя</code><span class="en">make directory</span></div>
+        <p class="def">Создать папку.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">notepad имя</code></div>
+        <p class="def">Открыть файл в Блокноте. Если файла нет — Блокнот спросит «Создать новый?». Так файлы и создают.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">cat имя</code></div>
+        <p class="def">Показать содержимое файла прямо в терминале, не открывая Блокнот.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">Get-Content имя -Encoding utf8</code></div>
+        <p class="def">То же, что <code>cat</code>, но читает файл в кодировке utf-8.
+          <span class="ex">Увидел кракозябры вместо русского — файл, скорее всего, цел. Портит картинку сама <code>cat</code>: она читает в старой кодировке Windows.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">Copy-Item "откуда" -Destination "куда"</code></div>
+        <p class="def">Скопировать файл. Оригинал остаётся на месте — стало две штуки.
+          <span class="ex"><code>Copy-Item "C:\Users\User\foto.jpg" -Destination "foto.jpg"</code> — просто <code>foto.jpg</code> значит «сюда, в текущую папку».</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">Move-Item откуда куда</code></div>
+        <p class="def">Перенести файл или папку. Оригинал исчезает со старого места — осталась одна штука, но в другом месте.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">start .\файл</code></div>
+        <p class="def">Открыть файл нужной программой. Windows смотрит на расширение и решает сам: <code>.html</code> — браузер, <code>.txt</code> — Блокнот.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Замена в Блокноте</span><span class="en">Ctrl + H</span></div>
+        <p class="def">Окно «Заменить». Верхнее поле «Что», нижнее «Чем». Оставить нижнее пустым = удалить найденное во всём файле разом.
+          <span class="warnline">После замены обязательно <code>Ctrl + S</code>. Без сохранения на диске ничего не изменится.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">del имя</code><span class="en">delete</span></div>
+        <p class="def">Удалить файл.
+          <span class="warnline">Удаление из терминала идёт мимо Корзины. Вернуть нельзя. Проверяй имя дважды.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Клавиша Tab</span></div>
+        <p class="def">Дописывает имя за тебя. Набрал <code>cd ur</code>, нажал Tab — получилось <code>cd .\uroki\</code>. Нажимать всегда: экономит время и защищает от опечаток.
+          <span class="ex">Если Tab ничего не дописал — такой папки тут нет.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Клавиша q</span><span class="en">quit</span></div>
+        <p class="def">Выход из режима просмотра, когда экран «застрял» на длинном списке.
+          <span class="ex">Признак, что экран застрял: внизу мигает двоеточие <code>:</code>, приглашение <code>PS ...&gt;</code> не вернулось.</span>
+          <span class="warnline">Если приглашение вернулось — вывод закончился сам, <code>q</code> не нужна. PowerShell примет её за команду.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Знаки в пути</span></div>
+        <p class="def"><code>.</code> — тут, текущая папка. <code>..</code> — наружу, на уровень выше. <code>\</code> — разделитель, «зайти внутрь».</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Проверка программы</span></div>
+        <p class="def"><code>имя-программы --version</code> — установлена ли программа. Ответила версией — стоит. «Не является командой» — не стоит или опечатка.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= HTML ================= -->
+  <section class="group" id="html">
+    <h2>HTML и страницы</h2>
+    <p class="groupnote">Аналогия — дом: HTML это стены, CSS обои, JavaScript электрика.</p>
+    <div class="entries">
+
+      <div class="entry">
+        <div class="key"><span class="ru">HTML</span></div>
+        <p class="def">Содержимое страницы: заголовки, тексты, кнопки. Скелет.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">CSS</span></div>
+        <p class="def">Оформление: цвета, шрифты, отступы, размеры.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">JavaScript</span></div>
+        <p class="def">Поведение: реакция на клики, переключение темы, меню.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Тег</span><span class="en">tag</span></div>
+        <p class="def">Команда HTML в угловых скобках. Почти всегда парная: <code>&lt;h1&gt;Заголовок&lt;/h1&gt;</code> — открывающий, текст, закрывающий со слэшем.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Матрёшка</span></div>
+        <p class="def">Теги вкладываются друг в друга. Что открыл последним — закрываешь первым. Отступы слева нужны людям, браузеру они безразличны.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">&lt;div&gt;</code></div>
+        <p class="def">Тег-коробка. Сам ничего не делает и на экране не виден — просто держит внутри другие теги.
+          <span class="ex">Зачем: чтобы сказать «сдвинь эту коробку целиком», а не каждую строчку отдельно. Как папка на компьютере.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">&lt;section&gt;</code> <code class="chip">&lt;header&gt;</code> <code class="chip">&lt;footer&gt;</code></div>
+        <p class="def">Те же коробки, что <code>&lt;div&gt;</code>, но с понятными именами: раздел, шапка, подвал.
+          <span class="ex">Разница только в названии — чтобы человек читал код и понимал, где что.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">&lt;img src="foto.jpg" alt="..."&gt;</code><span class="en">image</span></div>
+        <p class="def">Картинка. Закрывающего тега нет — внутрь класть нечего.
+          <span class="ex"><code>src</code> = source, «источник». Просто <code>foto.jpg</code> значит «файл из этой же папки».</span>
+          <span class="ex">Картинка <strong>не хранится внутри</strong> html-файла. Это отдельный файл рядом, а HTML только говорит браузеру «сходи возьми его и покажи здесь».</span>
+          <span class="ex"><code>alt</code> = alternative, «замена». Текст вместо картинки, если она не загрузилась. Его же читают голосом незрячим людям и читает Google. Без <code>alt</code> работа считается недоделанной.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">max-width: 100%</code></div>
+        <p class="def">«Шире этого не растягивайся». У фотографии свой размер в пикселях, и браузер честно покажет её во всю величину — она вылезет за край страницы.
+          <span class="ex">Проценты в CSS всегда считаются <strong>от родителя</strong>. Картинка лежит в <code>body</code> шириной 700px → <code>100%</code> = 700 пикселей, <code>50%</code> = 350.</span>
+          <span class="ex">Это <strong>максимум</strong>, а не точный размер. Картинка меньше 700px останется маленькой, раздуваться не станет.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">display: block</code></div>
+        <p class="def">«Ты не буква, ты отдельный блок». По умолчанию браузер считает картинку большой буквой в строке текста — поэтому она прижата влево.
+          <span class="ex">Центрирование картинки — две строки вместе: <code>display: block;</code> и <code>margin: 0 auto;</code></span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Скобки в CSS</span></div>
+        <p class="def"><strong>Не работает CSS — первым делом считай скобки.</strong> Сколько открыл <code>{</code>, столько закрой <code>}</code>.
+          <span class="ex">Пропустил одну — следующее правило оказывается <em>внутри</em> предыдущего. CSS вложенные правила не понимает и выбрасывает весь кусок.</span>
+          <span class="ex">Аналогия: положил коробку с обувью внутрь коробки с посудой и удивляешься, что обуви на полке нет.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">display: flex</code><span class="en">Flexbox</span></div>
+        <p class="def">Ставит детей коробки <strong>в ряд</strong>. По умолчанию блоки идут сверху вниз, каждый на своей строке.
+          <span class="ex"><strong>Ставится на РОДИТЕЛЯ, а не на детей.</strong> Написал правило для коробки — в ряд встали её дети.</span>
+          <span class="ex">Аналогия: командуешь не каждому солдату, а сержанту: «построй своих в шеренгу».</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">gap</code><span class="en">промежуток</span></div>
+        <p class="def">Расстояние между детьми внутри flex-контейнера. Ставится один раз на родителя и работает <strong>только между</strong> элементами — по краям ничего не добавляет.
+          <span class="ex">Раньше ставили <code>margin</code> каждому ребёнку и мучились: у последнего отступ лишний.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">flex: 1</code></div>
+        <p class="def">«Дели свободное место поровну». Ставится <strong>детям</strong> — в отличие от <code>display: flex</code>, который на родителе.
+          <span class="ex">У всех <code>1</code> — по трети каждому, независимо от длины текста. Поставишь одному <code>flex: 2</code> — займёт вдвое больше соседей.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">flex-direction</code><span class="en">направление ряда</span></div>
+        <p class="def"><code>row</code> (по умолчанию) — в строку слева направо · <code>column</code> — в столбик сверху вниз.
+          <span class="ex">Вместе с <code>@media</code> — главный приём адаптивности: на компьютере карточки в ряд, на телефоне в столбик. Файл один.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Сервер</span><span class="en">server</span></div>
+        <p class="def">Компьютер, который <strong>всегда включён и всегда готов ответить</strong>. От слова serve — «обслуживать». Поэтому сайт работает, когда свой компьютер выключен.
+          <span class="ex">Разговор браузера с сервером: «дай мне <code>index.html</code>» — «держи». Это <strong>запрос и ответ</strong> (request и response).</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Два вида серверов</span></div>
+        <p class="def"><strong>Первый</strong> — просто раздаёт файлы. Как автомат с газировкой: нажал кнопку, получил банку. <strong>Второй</strong> — умеет думать: на нём работает программа, ему можно что-то передать.
+          <span class="warnline">GitHub Pages — первого вида. Поэтому форма не может отправить письмо: <strong>некому принять данные</strong>. На той стороне только папка с файлами.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Фронтенд и бэкенд</span><span class="en">frontend / backend</span></div>
+        <p class="def"><strong>Фронтенд</strong> — то, что видит человек, работает в браузере. HTML, CSS, JavaScript. <strong>Бэкенд</strong> — то, что происходит на сервере: приём заказов, база данных, отправка писем.
+          <span class="ex">Аналогия с кафе: зал, меню, официант — фронтенд. Кухня, склад, бухгалтерия — бэкенд. Гость видит только зал, но без кухни зал бесполезен.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Всё, что в браузере — видно всем</span></div>
+        <p class="def">⚠️ Любой нажмёт <code>Ctrl + Shift + I</code> и прочитает твой <code>script.js</code>. Поэтому пароли и важное держат на сервере, где код не виден.
+          <span class="ex">Так делать <strong>нельзя</strong>: <code>if (parol === 'qwerty123')</code></span>
+          <span class="ex">На сервере тоже не хранят пароль как есть — хранят «отпечаток», из которого пароль обратно не восстановить.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">JavaScript ≠ Java</span></div>
+        <p class="def">Разные языки. Названия похожи по историческим причинам, общего мало. Наш — <strong>JavaScript</strong>.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Кеш браузера</span><span class="en">cache</span></div>
+        <p class="def">⚠️ Браузер хранит копии файлов, чтобы не скачивать их заново каждый раз. Обычное <code>F5</code> кеш не трогает — можно чинить код и видеть старое поведение.
+          <span class="warnline">Код правильный, а поведение старое — жми <code>Ctrl + F5</code>. Это «жёсткое обновление»: скачать всё заново.</span>
+          <span class="ex">Чаще всего случается с <code>.css</code> и <code>.js</code> — их браузер кеширует охотнее всего.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">.value</code></div>
+        <p class="def">То, что человек напечатал в поле. <code>imya.value</code>
+          <span class="ex">Пустое поле — это пустая строка <code>''</code>. Так и проверяют: <code>if (imya.value === '')</code></span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">#id</code> в JavaScript</div>
+        <p class="def">Точка <code>.</code> ищет класс, решётка <code>#</code> ищет <code>id</code> — так же, как в CSS.
+          <span class="ex"><code>document.querySelector('#imya')</code></span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Склейка текста плюсом</span></div>
+        <p class="def"><code>'Спасибо, ' + imya.value + '!'</code> — плюс между текстом означает не сложение, а <strong>соединение</strong>.
+          <span class="ex">Про пробел: <code>'Спасибо, '</code> — пробел внутри кавычек. Без него слова слипнутся.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">||</code><span class="en">или</span></div>
+        <p class="def">Две вертикальные черты. «Если одно <strong>или</strong> другое»: <code>if (a === '' || b === '')</code></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">return</code><span class="en">выйти</span></div>
+        <p class="def">Прерывает функцию на месте. Строки ниже не выполнятся.
+          <span class="warnline">Без него проверка бесполезна: окошко покажется, а форма всё равно отправится.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">alert('текст')</code></div>
+        <p class="def">Всплывающее окошко с сообщением. Простейший способ что-то сказать человеку.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Кэш браузера</span><span class="en">cache</span></div>
+        <p class="def">⚠️ Браузер хранит копии файлов у себя, чтобы не качать заново. Обычно удобно, при разработке мешает: правишь файл, а браузер подсовывает вчерашнюю копию.
+          <span class="warnline"><code>F5</code> кэш <strong>не сбрасывает</strong>. Нужно <code>Ctrl + F5</code> или <code>Ctrl + Shift + R</code> — «скачай всё заново».</span>
+          <span class="ex">Если правка не появляется, а код точно верный — первым делом жёсткое обновление.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">min-height</code></div>
+        <p class="def">Минимальная высота. Пустой элемент занимает ноль — как только в нём появится текст, всё под ним прыгнет вниз.
+          <span class="ex">Резервирует место заранее, чтобы страница не дёргалась.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Заранее готовим место</span></div>
+        <p class="def">Приём: положить в HTML пустой элемент (<code>&lt;p class="otvet"&gt;&lt;/p&gt;</code>), а JavaScript впишет туда текст по событию.
+          <span class="ex">Место сообщения задаётся тем, где стоит этот элемент.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Показывай, что дело идёт</span></div>
+        <p class="def">Между нажатием и ответом проходит время. Надпись «Отправляю…» — мелочь, но без неё человек не понимает, нажалось ли вообще.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">«Сервер» — два разных значения</span></div>
+        <p class="def"><strong>1. Компьютер (железо).</strong> Мощная машина, работает круглосуточно, подключена к интернету. Его не пишут — арендуют, несколько долларов в месяц.
+          <span class="ex"><strong>2. Программа (код).</strong> Живёт на том компьютере, принимает запросы и отвечает. Вот её пишут.</span>
+          <span class="ex">Когда говорят «нужен сервер» про форму — имеют в виду второе. Серверная программа умеет принять данные, проверить, положить в базу, отправить письмо. HTML и CSS этого не могут — они только показывают.</span>
+          <span class="ex">На Node.js серверный код пишут на <strong>том же JavaScript</strong>, только выполняется он не в браузере.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Сервер и сервис-посредник</span></div>
+        <p class="def"><strong>Сервер</strong> — программа на другой стороне, которая примет данные формы. Свой писать не обязательно: <strong>Formspree</strong> и подобные сервисы принимают данные и пересылают на почту.
+          <span class="ex">Не всё надо писать самому — для типовых задач есть готовые сервисы.</span>
+          <span class="warnline">⚠️ При первой отправке приходит письмо с просьбой подтвердить адрес. Пока не подтвердишь — сообщения копятся, но на почту не идут. Первые письма часто попадают в «Спам».</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">action</code> и <code class="chip">method="POST"</code></div>
+        <p class="def">Атрибуты формы: <code>action</code> — <strong>куда</strong> отправлять, <code>method</code> — <strong>как</strong>. <code>POST</code> значит «посылаю данные».</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">name</code> у поля</div>
+        <p class="def">Подпись поля, под которой данные придут получателю. <strong>Обязателен</strong> — без него поле не отправится, сервер не поймёт, что это за значение.
+          <span class="warnline">Не путать с <code>id</code>: <code>id</code> — для CSS и JavaScript внутри страницы, <code>name</code> — для отправки наружу.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">.value</code></div>
+        <p class="def">Что человек напечатал в поле. <code>imya.value</code>
+          <span class="ex">Пустое поле — это <code>''</code>, пустая строка. Так и проверяют: <code>if (imya.value === '')</code></span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">#</code> в селекторе</div>
+        <p class="def">Решётка — обращение по <code>id</code>, точка — по классу. Одинаково в CSS и в JavaScript: <code>document.querySelector('#imya')</code></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Склейка строк плюсом</span></div>
+        <p class="def"><code>'Спасибо, ' + imya.value + '!'</code> — три куска слепляются в один текст.
+          <span class="ex">Пробел после запятой пишется <strong>внутри кавычек</strong>, иначе слова слипнутся.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">return</code></div>
+        <p class="def">«Выйти из функции немедленно», дальше код не пойдёт.
+          <span class="ex">В проверке полей без него код пошёл бы дальше и отправил пустую форму.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">alert</code></div>
+        <p class="def">Всплывающее окошко с сообщением. Быстро и грубо — для настоящего сайта лучше показывать текст прямо на странице.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">fetch</code><span class="en">сходить по адресу</span></div>
+        <p class="def">Отправить данные на сервер и получить ответ, не перезагружая страницу.
+          <span class="ex"><code>new FormData(forma)</code> — собрать всё из полей в одну посылку.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">.then</code> и <code class="chip">.catch</code></div>
+        <p class="def"><strong>Код не ждёт.</strong> Запрос летит через интернет не мгновенно, и код не стоит на месте — он говорит: «вот вернётся ответ, тогда сделаешь это».
+          <span class="ex"><code>.then</code> — получилось · <code>.catch</code> — не получилось.</span>
+          <span class="warnline">Всегда пара. Без <code>.catch</code> при пропавшем интернете человек нажмёт кнопку и не увидит ничего — решит, что сайт сломан.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">&lt;form&gt;</code><span class="en">форма</span></div>
+        <p class="def">Коробка для полей ввода. Внутри — <code>&lt;label&gt;</code> (подпись), <code>&lt;input&gt;</code> (однострочное поле), <code>&lt;textarea&gt;</code> (многострочное), кнопка.
+          <span class="warnline">Сама по себе форма письмо не отправит. Нужен <strong>сервер</strong> — программа на другой стороне, которая примет данные.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Пара <code>for</code> и <code>id</code></span></div>
+        <p class="def">Связывает подпись с полем: <code>&lt;label for="imya"&gt;</code> и <code>&lt;input id="imya"&gt;</code>.
+          <span class="ex">Благодаря этому можно щёлкнуть по слову «Ваше имя» — и курсор прыгнет в поле. Мелочь, но так делают все.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">placeholder</code><span class="en">подсказка</span></div>
+        <p class="def">Бледный текст внутри пустого поля. Исчезает, как только начинаешь печатать.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">preventDefault()</code><span class="en">отменить обычное поведение</span></div>
+        <p class="def">У многих элементов есть встроенное поведение. У формы — <strong>перезагрузить страницу</strong> при отправке, так было устроено в вебе с самого начала.
+          <span class="ex">Вызывается у события: <code>function (sobytie) { sobytie.preventDefault(); }</code></span>
+          <span class="warnline">Как выглядит, если забыть: заполнил форму, нажал — страница моргнула, поля очистились. Симптом «текст пропал».</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Слово в скобках у функции</span><span class="en">событие</span></div>
+        <p class="def"><code>function (sobytie) { ... }</code> — то, что браузер передаёт внутрь функции сам. Сведения о событии. Имя придумываем сами.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">innerHTML</code></div>
+        <p class="def">Всё содержимое элемента. Можно прочитать, можно заменить целиком: <code>forma.innerHTML = '&lt;p&gt;Спасибо!&lt;/p&gt;';</code></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">if (element) { … }</code><span class="ru">защита</span></div>
+        <p class="def">«Если элемент нашёлся». Нужна, когда элемент есть не на всех страницах, а <code>script.js</code> общий.
+          <span class="ex">Без неё скрипт падает целиком и ломает всё остальное. С ней блок просто пропускается.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Запятая в селекторе</span></div>
+        <p class="def"><code>.forma input, .forma textarea { … }</code> — «и то, и другое». Одно правило на два элемента вместо двух одинаковых блоков.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">font-family: inherit</code><span class="en">наследовать</span></div>
+        <p class="def">«Возьми шрифт от родителя». Поля ввода упрямые: браузер даёт им свой стандартный шрифт, не как у сайта. <code>inherit</code> заставляет подчиниться.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">opacity</code><span class="en">прозрачность</span></div>
+        <p class="def">От <code>0</code> (не видно) до <code>1</code> (непрозрачно). <code>0.85</code> — чуть просвечивает.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Прежде чем удалять скобку — посмотри, что она закрывает</span></div>
+        <p class="def">⚠️ Скобка в конце файла казалась лишней — на деле она закрывала функцию, а новый код вставился <strong>внутрь</strong> этой функции.
+          <span class="warnline">Скобка была не лишняя — она стояла не на месте. Считай пары сверху вниз.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Комментарии</span><span class="en">comments</span></div>
+        <p class="def">Текст, который браузер не читает. Заметки для человека. В CSS — <code>/* текст */</code>, в JavaScript — <code>// текст</code>, в HTML — <code>&lt;!-- текст --&gt;</code>.
+          <span class="ex">Не украшение: через месяц откроешь файл и не вспомнишь, что делает <code>classList.toggle('vidna')</code>. Заголовок раздела подскажет сразу.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">margin-right: auto</code></div>
+        <p class="def"><code>auto</code> = «сколько получится». Отступ раздувается до максимума и отталкивает остальных к противоположному краю.
+          <span class="ex">Нужен, когда у flex-родителя стало больше двух детей и <code>space-between</code> начал делить место на всех.</span>
+          <span class="ex">Знакомое <code>margin: 0 auto</code> центрирует — там место делится поровну с обеих сторон. Здесь весь запас уходит в одну.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Когда пора заводить переменную</span></div>
+        <p class="def">Признак: одно значение написано в файле <strong>больше двух раз</strong>. Захочешь сменить — придётся искать по всему файлу.
+          <span class="ex">Бонус: в разных темах у переменной могут быть разные значения. Яркий зелёный хорош на тёмном фоне и плохо читается на белом.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Симптом и причина — разные строки</span></div>
+        <p class="def">⚠️ «Нет рамки у карточек» — а причина в пропавшей точке с запятой <strong>строкой выше</strong>. Выглядят никак не связанными.
+          <span class="warnline">Смотреть надо на соседние строки, а не только на ту, где пропажа.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">:root</code> и <code class="chip">--peremennaya</code><span class="en">переменные CSS</span></div>
+        <p class="def">Хранилище значений. <code>:root</code> — «корень», весь документ целиком. Две чёрточки <code>--</code> в начале обязательны — так CSS понимает, что это переменная, а не свойство.
+          <span class="ex">Аналогия: подписанные банки на кухне. В банке «фон» лежит цвет. Дальше по рецепту пишем «возьми из банки фон».</span>
+          <span class="ex"><code>:root { --fon: #0f1720; }</code></span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">var(--fon)</code></div>
+        <p class="def">Взять значение из переменной. <code>var</code> = variable.
+          <span class="ex"><code>background: var(--fon);</code></span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Смена темы одним классом</span></div>
+        <p class="def">Главная польза переменных. Пишем второй комплект значений для <code>body.svetlaya</code> — и весь сайт переодевается разом, <strong>ни одно другое правило трогать не надо</strong>.
+          <span class="ex">Без переменных пришлось бы искать каждый цвет по всему файлу и писать второй комплект правил.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">document.body</code></div>
+        <p class="def"><code>&lt;body&gt;</code> на странице всегда ровно один, поэтому у браузера для него есть короткое имя — <code>querySelector</code> не нужен.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">localStorage</code><span class="en">память браузера</span></div>
+        <p class="def">Блокнот, который лежит в браузере. Страницы меняются, блокнот остаётся — переживает даже закрытие вкладки.
+          <span class="ex"><code>setItem('tema', 'svetlaya')</code> — записать · <code>getItem('tema')</code> — прочитать.</span>
+          <span class="warnline">Зачем нужен: каждая страница загружается заново, JavaScript стартует с чистого листа и не помнит прошлых нажатий. Без <code>localStorage</code> выбор темы слетает при переходе.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">===</code></div>
+        <p class="def">«В точности равно». Сравнение внутри <code>if</code>.
+          <span class="ex">Три знака, не один. Один знак <code>=</code> — это «положи в ящик», совсем другое действие.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">transition с несколькими свойствами</span></div>
+        <p class="def">Через запятую можно перечислять сколько угодно: <code>transition: background 0.3s, color 0.3s;</code></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">position: fixed</code></div>
+        <p class="def">«Приклеить к <strong>экрану</strong>, а не к странице». Обычные элементы едут вместе со страницей при прокрутке, элемент с <code>fixed</code> остаётся на месте.
+          <span class="ex">Как наклейка на стекле: пейзаж за окном движется, наклейка нет.</span>
+          <span class="ex">Место задаётся отступами от краёв экрана: <code>bottom: 20px; right: 20px;</code></span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">border-radius: 50%</code></div>
+        <p class="def">Половина от размера элемента — получается круг. Меньшие значения (<code>8px</code>, <code>12px</code>) просто скругляют углы.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">window</code><span class="en">окно браузера</span></div>
+        <p class="def">Само окно. Его тоже можно слушать: <code>window.addEventListener('scroll', ...)</code> — событие «страницу прокрутили».
+          <span class="ex"><code>window.scrollY</code> — насколько прокрутили, в пикселях.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">classList.add / remove</code></div>
+        <p class="def">Добавить класс / убрать класс — в отличие от <code>toggle</code>, который переключает вслепую.
+          <span class="ex">Нужны, когда состояние ставится <strong>по условию</strong>: прокрутили ниже 300 — <code>add</code>, выше — <code>remove</code>.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">window.scrollTo({ top: 0, behavior: 'smooth' })</code></div>
+        <p class="def">«Прокрути к точке 0» — самый верх. <code>behavior: 'smooth'</code> — плавно, без него страница прыгнет мгновенно.
+          <span class="ex">Фигурные скобки внутри круглых — набор настроек одной пачкой. Как атрибуты у тега, только в JavaScript.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Один скрипт на все страницы — осторожно</span></div>
+        <p class="def">⚠️ Если <code>script.js</code> подключён везде, а элемент есть только на одной странице — на остальных <code>querySelector</code> вернёт пустоту и скрипт <strong>сломается целиком</strong>, вместе с меню.
+          <span class="ex">Поэтому кнопки добавляют сразу во все файлы.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">:hover</code><span class="en">при наведении</span></div>
+        <p class="def"><strong>Псевдокласс (pseudo-class)</strong> — состояние элемента, а не его класс. Пишется через двоеточие, <strong>без пробела</strong>: <code>nav a:hover</code>.
+          <span class="ex">Браузер сам следит за мышью — JavaScript не нужен.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">transition</code><span class="en">переход</span></div>
+        <p class="def">Делает смену свойства плавной. <code>transition: color 0.3s</code> — что менять и за сколько.
+          <span class="warnline">Ставится на <strong>обычное</strong> состояние, а не на <code>:hover</code>. Тогда работает в обе стороны — и когда навёл, и когда убрал мышь. Поставишь в <code>:hover</code> — плавным будет только появление.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">transform: scale()</code></div>
+        <p class="def"><code>transform</code> — «преобразование»: сдвиг, поворот, масштаб. <code>scale(1.08)</code> — на 8% крупнее.
+          <span class="ex">В паре с <code>transition</code> даёт эффект приближения фото при наведении.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">overflow: hidden</code><span class="en">переполнение</span></div>
+        <p class="def">Когда содержимое больше коробки, браузер спрашивает: что делать? <code>hidden</code> — «спрятать лишнее», обрезать по краю.
+          <span class="ex">Нужен, чтобы увеличенное фото не вылезало за свою рамку и не налезало на соседа.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Селектор описывает цепочку</span></div>
+        <p class="def"><code>.galereya figure:hover img</code> — «картинка внутри фигуры, на которую навели». Наводим на одно, меняется другое, внутри.
+          <span class="ex">Так можно: селектор описывает путь, а не один элемент.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Один селектор — один блок</span></div>
+        <p class="def">Два блока с одинаковым селектором в разных местах файла браузер поймёт и сложит вместе — сайт работать будет. Но читать такой файл тяжело: настройки одного элемента разбросаны.
+          <span class="ex">Это не про работу сайта, а про то, чтобы через месяц самому разобраться в своём же файле.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Встроенные отступы браузера</span></div>
+        <p class="def">У некоторых тегов есть собственные отступы, которых ты не задавал. У <code>&lt;figure&gt;</code> — 40 пикселей слева и справа. Это <code>user agent stylesheet</code>: браузер применяет свои правила к тегам, для которых мы ничего не написали.
+          <span class="ex">Перебивается своим правилом: <code>margin: 0</code>.</span>
+          <span class="warnline">Если элемент ведёт себя странно, а ты про него ничего не писал — загляни в панель Styles, в <code>user agent stylesheet</code>. Скорее всего, там уже что-то есть.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Порядок правил в CSS решает</span></div>
+        <p class="def">⚠️ Самое важное про CSS. При равной силе побеждает <strong>то правило, что написано ниже</strong>.
+          <span class="ex">Аналогия: два маляра красят стену. Кто пришёл последним — того цвет и останется.</span>
+          <span class="warnline">Медиазапрос <strong>не даёт</strong> дополнительной силы. Поэтому <code>@media</code> всегда пишут <strong>в конце файла</strong> — тогда он гарантированно перебивает то, что выше.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">display: none</code></div>
+        <p class="def">Убрать элемент совсем. Не просто спрятать — место под него тоже не остаётся.
+          <span class="ex">Из той же семьи, что <code>display: block</code> и <code>display: flex</code>.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">flex-wrap: wrap</code><span class="en">разрешить перенос</span></div>
+        <p class="def">По умолчанию Flexbox упрямо ставит всех детей в один ряд, даже если они не влезают. <code>wrap</code> разрешает лишним переехать на новую строку.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Селектор без пробела</span></div>
+        <p class="def"><code>.ssylki .otkryto</code> — с пробелом: «<code>otkryto</code> <strong>внутри</strong> <code>ssylki</code>». <code>.ssylki.otkryto</code> — без пробела: «оба класса <strong>на одном</strong> элементе».
+          <span class="warnline">Пробел решает всё. Разные вещи, а на вид почти одинаково.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Несколько классов на элементе</span></div>
+        <p class="def">Пишутся через пробел в одних кавычках: <code>class="ssylki otkryto"</code>.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Точка с запятой в CSS</span></div>
+        <p class="def">⚠️ Как точка в предложении: «настройка закончилась». Забыл — браузер читает две строки как одну бессмыслицу и выбрасывает <strong>обе</strong>.
+          <span class="ex">Каждая строка внутри фигурных скобок кончается на <code>;</code></span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">JavaScript</span><span class="en">третий язык</span></div>
+        <p class="def">Отвечает за <strong>поведение</strong>: реакцию на нажатия. HTML — стены и комнаты, CSS — обои и мебель, JavaScript — электрика и выключатели.
+          <span class="ex">Живёт внутри тега <code>&lt;script&gt;</code> или в отдельном файле <code>.js</code> — так же, как CSS живёт в <code>&lt;style&gt;</code> или в <code>.css</code>.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">&lt;script src="script.js"&gt;&lt;/script&gt;</code></div>
+        <p class="def">Подключить файл с кодом. <code>src</code> = source, «источник» — тот же атрибут, что у картинки.
+          <span class="ex">Тег парный, но внутри пусто: открыли и сразу закрыли. Ставится перед <code>&lt;/body&gt;</code>.</span>
+          <span class="ex">В самом <code>.js</code> файле теги <code>&lt;script&gt;</code> не нужны.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">document.querySelector('.burger')</code></div>
+        <p class="def">«Найди на странице элемент с классом <code>burger</code>». <code>document</code> — вся страница целиком.
+          <span class="ex">Внутри кавычек — <strong>тот же селектор, что в CSS</strong>. Знания переносятся один в один.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">var</code><span class="en">variable, переменная</span></div>
+        <p class="def">«Заведи ящик и положи туда». Имя ящика придумываешь сам: <code>var knopka = ...</code></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">addEventListener('click', ...)</code></div>
+        <p class="def">«Добавь слушателя события». Как поставить человека у двери: «услышишь звонок — сделай вот это».
+          <span class="ex"><code>'click'</code> — какое событие ждём. Нажатие мыши или палец на телефоне.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">classList.toggle('otkryto')</code></div>
+        <p class="def"><code>classList</code> — список классов элемента. <code>toggle</code> = «переключить»: класса нет — добавить, есть — убрать.
+          <span class="ex">Поэтому кнопка работает в обе стороны <strong>одной</strong> командой.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">if … else</code><span class="en">если … иначе</span></div>
+        <p class="def">Развилка: посмотреть, как обстоят дела, и выбрать действие.
+          <span class="ex"><code>if (условие) { одно } else { другое }</code></span>
+          <span class="ex">Вторая опора программирования. Первая — найти элемент и что-то с ним сделать. Почти всё в JavaScript собирается из этих двух вещей.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">classList.contains('otkryto')</code></div>
+        <p class="def">«Содержит ли элемент такой класс» — да или нет. Обычно стоит внутри <code>if</code>.
+          <span class="warnline">Порядок важен: сначала <code>toggle</code> переключает, потом <code>contains</code> смотрит на результат. Поменяешь местами — увидишь предыдущее состояние.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">textContent</code></div>
+        <p class="def">Текст внутри элемента. Можно прочитать, а можно записать новый: <code>knopka.textContent = '✕';</code></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">JavaScript при ошибке встаёт целиком</span></div>
+        <p class="def">⚠️ Важное отличие от CSS. CSS ошибку проглатывает: выбросит кривое правило, остальное работает. JavaScript <strong>останавливается совсем</strong> — перестаёт работать весь файл, даже правильные строки.
+          <span class="ex">Поэтому сломанный скрипт выглядит так, будто «вообще ничего не нажимается».</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">Ctrl + A</code><span class="en">all, выделить всё</span></div>
+        <p class="def">Когда файл надо заменить целиком, а не дописать: <code>Ctrl + A</code>, потом <code>Delete</code>, потом вставить новое.
+          <span class="ex">Надёжнее, чем выделять мышью и надеяться, что попал точно.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Класс-выключатель</span></div>
+        <p class="def">Главная идея меню-гамбургера и вообще всей интерактивности. CSS описывает <strong>оба состояния</strong>, JavaScript только вешает и снимает класс.
+          <span class="ex">Нет класса <code>otkryto</code> → спрятано. Есть → видно. Проверить можно вручную: вписать <code>class="ssylki otkryto"</code> прямо в HTML — раскроется без всякого JavaScript.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Гамбургер</span><span class="en">hamburger menu</span></div>
+        <p class="def">Кнопка <code>☰</code> из трёх полосок. На телефоне мало места — ссылки прячут под неё. Название прижилось: похоже на булка-котлета-булка.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Я не запоминаю команды</span></div>
+        <p class="def">Это норма. Свойств в CSS больше пятисот, наизусть их не знает никто — профессионалы каждый день смотрят в справочник.
+          <span class="ex">Важно не написание, а <strong>понимание</strong>: увидеть, что блок попал внутрь <code>@media</code>, заметить пропавшую точку с запятой, понять, почему одно правило перебило другое.</span>
+          <span class="warnline">Не заучивай, а понимай и подглядывай. Запоминается само, от повторения.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">«Допиши в строку» ≠ «добавь строку»</span></div>
+        <p class="def">⚠️ Разные действия. Просили дописать слово в существующую строку — появилась новая, стало два <code>&lt;div&gt;</code> подряд и вложенность сломалась.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">display: grid</code><span class="en">сетка</span></div>
+        <p class="def">Раскладывает детей <strong>сеткой</strong> — по столбцам и строкам. Как <code>flex</code>, но с заранее описанными колонками. Ставится на родителя.
+          <span class="ex">Для галереи фотографий удобнее <code>grid</code>, чем <code>flex</code>: колонки строго равны, картинки не разъезжаются.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">grid-template-columns</code><span class="en">описание столбцов</span></div>
+        <p class="def">Сколько колонок и какой ширины. <code>repeat(3, 1fr)</code> = «повтори 3 раза по 1 доле» — три равных столбца.
+          <span class="ex"><code>1fr</code> в медиазапросе = одна колонка. Так галерея на телефоне становится столбиком.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">fr</code><span class="en">fraction, доля</span></div>
+        <p class="def">Единица измерения только для Grid. Свободное место делится на доли. Всем по <code>1fr</code> — поровну.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">object-fit: cover</code><span class="en">накрыть</span></div>
+        <p class="def">Что делать картинке, если задана жёсткая рамка, а пропорции не совпадают. <code>cover</code> — увеличить и обрезать края, заполнив рамку. Пропорции сохраняются.
+          <span class="ex"><strong>Без него картинка растянется</strong> — люди на фото станут плоскими.</span>
+          <span class="ex">Работает в паре с заданными <code>width</code> и <code>height</code>. Главный приём для галерей, где фото разных пропорций.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Блок снаружи @media вместо внутри</span></div>
+        <p class="def">⚠️ Зеркало прошлой ловушки. Правило должно было лечь внутрь <code>@media</code>, а легло после него — и работает <strong>всегда</strong>, в том числе там, где не надо.
+          <span class="ex">Коварно тем, что в режиме телефона всё выглядит правильно. Обнаруживается только при переключении обратно.</span>
+          <span class="warnline">Правило: проверять <strong>оба</strong> режима, а не тот, в котором работал.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Почему скелет копируется в каждый файл</span></div>
+        <p class="def">Каждый html-файл — самостоятельный документ. Браузер открывает один файл и ничего не знает про соседние: подсмотреть меню в <code>index.html</code> он не может.
+          <span class="ex">Аналогия: три письма в конвертах. В каждом надо заново написать адрес, даже если он один и тот же.</span>
+          <span class="ex">CSS вынести получилось — один <code>style.css</code> на все страницы. С HTML нужны инструменты посложнее.</span>
+          <span class="warnline">Следствие: добавил страницу — поправь меню во <strong>всех</strong> остальных файлах.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Имена файлов для интернета</span></div>
+        <p class="def">Только английские буквы, цифры, дефис. Без пробелов и русских букв — они на сайтах ломаются.
+          <span class="ex">И всё маленькими буквами: в интернете <code>Foto.html</code> и <code>foto.html</code> — разные файлы.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">justify-content</code><span class="en">выровнять содержимое</span></div>
+        <p class="def">Раскладывает детей <strong>вдоль</strong> ряда — влево-вправо. Ставится на родителя с <code>display: flex</code>.
+          <span class="ex"><code>space-between</code> = «пространство между»: всё свободное место выливается между детьми, они разъезжаются к краям. Так делают меню: логотип слева, ссылки справа.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">align-items</code><span class="en">выровнять элементы</span></div>
+        <p class="def">Выравнивает детей <strong>поперёк</strong> ряда — вверх-вниз. Тоже на родителя.
+          <span class="ex"><code>center</code> — по центру · <code>flex-start</code> — прижать вверх · <code>flex-end</code> — прижать вниз.</span>
+          <span class="ex">Если дети почти одной высоты, эффект бывает 3–5 пикселей и глазом не виден. Чтобы проверить, что правило вообще работает, временно поставь <code>flex-end</code> — сдвиг станет заметен.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">justify-content и align-items — не путать</span></div>
+        <p class="def"><strong>justify</strong> — вдоль ряда (лево-право) · <strong>align</strong> — поперёк ряда (верх-низ).
+          <span class="ex">Оба ставятся только на родителя, у которого есть <code>display: flex</code>. Без него они молчат.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">letter-spacing</code><span class="en">расстояние между буквами</span></div>
+        <p class="def">Раздвигает буквы. Приём настоящих логотипов: раздвинутые буквы читаются как название фирмы, а не как обычное слово.
+          <span class="ex"><code>letter-spacing: 3px</code></span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">font-weight: bold</code><span class="en">жирный</span></div>
+        <p class="def">Толщина букв. <code>bold</code> — жирные, <code>normal</code> — обычные.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Логотип бывает текстовый</span></div>
+        <p class="def">Не обязательно картинка. Текстовый логотип называют <strong>вордмарк (wordmark)</strong> — просто название фирмы особым шрифтом.
+          <span class="ex">Google, Coca-Cola, Ozon — это буквы, а не рисунок. Делается так: крупный размер + <code>font-weight: bold</code> + <code>letter-spacing</code>.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Правило попало внутрь @media</span></div>
+        <p class="def">⚠️ Частая ловушка. Дописал новый блок «в самый низ файла» — а низ оказался <strong>внутри</strong> коробки <code>@media</code>. Правило работает только на узких экранах, на широком молчит.
+          <span class="ex">Проверка за секунду: нажми <code>Ctrl + Shift + M</code>. Если в режиме телефона правило сработало — значит оно заперто в <code>@media</code>.</span>
+          <span class="ex"><code>@media</code> — тоже коробка со скобками. Новый блок должен стоять <strong>за</strong> её закрывающей <code>}</code>.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">&lt;strong&gt;</code></div>
+        <p class="def">«Важный текст». Браузер сам делает его жирным.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">Ctrl + Shift + C</code><span class="en">выбрать элемент</span></div>
+        <p class="def">Води мышкой по странице, щёлкни по нужному куску — в панели подсветится его код. <code>C</code> = choose. Главный приём DevTools.
+          <span class="ex">⚠️ В меню правой кнопки два похожих пункта: «Просмотр кода страницы» открывает мёртвый текст файла, «Просмотреть код» — живую панель.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Панель Styles</span></div>
+        <p class="def">Показывает, какие правила сработали на выбранный элемент и <strong>из какого файла и строки</strong> они пришли (<code>style.css:11</code>).
+          <span class="ex"><strong>Зачёркнутая строка = правило было, но проиграло более сильному.</strong> Самая полезная подсказка: сразу видно, почему настройка не подействовала.</span>
+          <span class="ex"><code>user agent stylesheet</code> — встроенные стили самого браузера. Поэтому голый HTML без CSS всё равно как-то выглядит.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Наследование</span><span class="en">inheritance</span></div>
+        <p class="def">Часть настроек элемент получает не сам, а <strong>от родителя</strong>. Блок <code>Inherited from body</code> в панели Styles.
+          <span class="ex"><strong>Передаётся то, что относится к тексту</strong> — шрифт, цвет, размер строки. <strong>Не передаётся то, что относится к коробке</strong> — отступы, рамки, фон.</span>
+          <span class="ex">Написал шрифт один раз для <code>body</code> — весь сайт им пишется. А наследуйся отступы — каждая вложенная коробка отодвигалась бы, вышла бы лесенка.</span>
+          <span class="ex">Своё правило сильнее унаследованного.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Консоль</span><span class="en">Console</span></div>
+        <p class="def"><strong>Журнал жалоб браузера.</strong> Не работает что-то на сайте — первым делом сюда. Когда дойдём до JavaScript, любая ошибка появится здесь с номером строки.
+          <span class="ex"><code>Failed to load resource ... status of 404</code> — «не удалось загрузить файл, не найден». <strong>404</strong> — самый известный код в интернете.</span>
+          <span class="ex">Аналогия: почтальон пришёл по адресу, дома никого — записал в журнал «не доставлено».</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">favicon</span><span class="en">значок вкладки</span></div>
+        <p class="def">Маленькая картинка слева от названия вкладки. Браузер ищет её сам, автоматически. Подключается тем же тегом <code>&lt;link&gt;</code>: <code>&lt;link rel="icon" href="znachok.svg"&gt;</code>
+          <span class="ex"><code>rel</code> = relation, «отношение»: чем файл приходится странице. <code>stylesheet</code> — стили, <code>icon</code> — значок.</span>
+          <span class="ex"><strong>Главное правило:</strong> на вкладке значок примерно 16×16 пикселей, детали не видны. Поэтому фавиконы почти всегда — одна буква или простой знак. Фотография превращается в цветное пятно.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">SVG</span><span class="en">картинка из формул</span></div>
+        <p class="def">Инструкция «нарисуй прямоугольник, потом букву». Браузер рисует заново при каждом размере, поэтому никогда не мылится.
+          <span class="ex"><code>viewBox="0 0 100 100"</code> — система координат, холст 100×100 условных единиц · <code>&lt;rect&gt;</code> прямоугольник · <code>&lt;text&gt;</code> буква · <code>fill</code> заливка.</span>
+          <span class="ex"><code>.jpg</code> — точки-пиксели, размывается, правят в фотошопе. <code>.svg</code> — описание фигур словами, всегда чёткий, правят в Блокноте.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">Ctrl + F5</code><span class="en">обновление с очисткой</span></div>
+        <p class="def">Браузер держит копии файлов в памяти, чтобы не качать заново. Поэтому после правки картинка иногда не меняется. <code>Ctrl + F5</code> — перекачать все файлы заново.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">Ctrl + Shift + I</code><span class="en">DevTools</span></div>
+        <p class="def">Инструменты разработчика — панель, которой пользуются каждый день. Внутри код страницы, ошибки, режим телефона. <code>I</code> = inspect, «осмотреть».
+          <span class="ex"><code>Ctrl + Shift + M</code> — режим телефона (<code>M</code> = mobile). Вторым нажатием выключается. Телефон для проверки не нужен, браузер притворяется сам.</span>
+          <span class="ex">⚠️ <code>F12</code> на ноутбуке может не сработать: верхний ряд клавиш занят двойной работой, а на некоторых моделях его перехватывает фирменная утилита. Надёжнее сочетание из трёх клавиш.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">&lt;meta name="viewport"&gt;</code></div>
+        <p class="def">Строка в <code>&lt;head&gt;</code>, без которой сайт на телефоне выглядит мелким: <code>content="width=device-width, initial-scale=1"</code>
+          <span class="ex">Читается: «не ужимай, считай ширину экрана настоящей». Без неё браузер рисует страницу как на широком экране и ужимает целиком — вместе с текстом.</span>
+          <span class="ex">Аналогия: газетный разворот сфотографировали и показали на спичечном коробке.</span>
+          <span class="ex">⚠️ Нужна в <strong>каждом</strong> html-файле — в общий <code>.css</code> её не вынесешь.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">@media</code><span class="en">медиа-запрос</span></div>
+        <p class="def">Правила, которые работают только при определённом условии: <code>@media (max-width: 500px) { h1 { font-size: 32px; } }</code>
+          <span class="ex">Читается: «если ширина экрана не больше 500 пикселей — применить это».</span>
+          <span class="ex">Ставят в конец файла: условные правила идут после обычных. Скобок две пары — внешняя у <code>@media</code>, внутренняя у самого правила.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Адаптивность</span><span class="en">responsive design</span></div>
+        <p class="def"><strong>Один файл — разный вид.</strong> Страница сама подстраивается под ширину экрана.
+          <span class="ex">Браузер постоянно знает свою ширину. Стало уже 500px — правила из <code>@media</code> включились. Стало шире — выключились. Автоматически, без JavaScript.</span>
+          <span class="ex">Так работают все современные сайты: на телефоне и на компьютере вид разный, а файл один.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Атрибут</span><span class="en">attribute</span></div>
+        <p class="def">Настройка тега. Живёт <strong>внутри угловых скобок</strong> открывающего тега. Браузер её читает и стирает, на экране не показывает.
+          <span class="ex"><code>href</code>, <code>target</code>, <code>class</code>, <code>src</code>, <code>alt</code> — все они атрибуты.</span>
+          <span class="ex">Внутри скобок — настройки. Между открывающим и закрывающим тегом — видимый текст. Напишешь <code>class="..."</code> между тегами — оно вылезет на страницу текстом.</span>
+          <span class="ex">Порядок атрибутов не важен. Разделяются пробелами, как слова в предложении.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Широта селектора</span></div>
+        <p class="def"><strong>Чем меньше написано в селекторе, тем больше элементов под него попадает.</strong> Добавляешь слово слева — сужаешь круг.
+          <span class="ex"><code>a { }</code> все ссылки · <code>nav a { }</code> только в меню · <code>.vneshnyaya { }</code> одна помеченная.</span>
+          <span class="ex">CSS ищет элементы по признакам. Нет своего признака — <strong>создай его сам</strong>, повесь бирку <code>class</code>.</span>
+          <span class="ex">Аналогия: в классе три Саши. Крикнешь «Саша!» — обернутся все. Нужна примета, которая есть только у одного.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">&lt;nav&gt;</code><span class="en">navigation, меню</span></div>
+        <p class="def">Коробка со ссылками для перехода по сайту. Такая же, как <code>&lt;div&gt;</code>, но с понятным именем. Ставят вверху, сразу после <code>&lt;body&gt;</code>.
+          <span class="ex">Ссылка на свой файл пишется просто именем: <code>&lt;a href="istoriya.html"&gt;История&lt;/a&gt;</code> — как <code>src</code> у картинки.</span>
+          <span class="ex"><strong>Меню должно быть на каждой странице, одинаковое.</strong> Иначе человек попадает в комнату без двери.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">&lt;link rel="stylesheet" href="style.css"&gt;</code></div>
+        <p class="def">Подключить внешний файл со стилями. Одна строка в <code>&lt;head&gt;</code> вместо всего блока <code>&lt;style&gt;</code>. Закрывающего тега нет, как у <code>&lt;img&gt;</code>.
+          <span class="ex">⚠️ Внутри <code>.css</code> <strong>угловых скобок быть не должно</strong>. Теги <code>&lt;style&gt;</code> не переносятся — они HTML, а в файле стилей только чистый CSS.</span>
+          <span class="ex">Зачем: одна строка — и новая страница одета целиком. Поменял цвет в одном месте — изменилось на всех страницах. Так устроены все настоящие сайты.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Селектор с пробелом</span><span class="en">nav a</span></div>
+        <p class="def"><strong>Пробел значит «внутри».</strong> <code>nav a</code> — «ссылки, которые лежат внутри <code>nav</code>».
+          <span class="ex"><code>a { }</code> — ко всем ссылкам на странице · <code>nav a { }</code> — только к тем, что в меню.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Браузер не видит переносы строк</span></div>
+        <p class="def"><strong>Enter для браузера — просто пробел.</strong> Несколько пробелов подряд, табуляции, пустые строки — всё сжимается в один пробел.
+          <span class="ex"><strong>Абзац делает тег <code>&lt;p&gt;</code>, а не клавиша Enter.</strong> Шесть абзацев — шесть пар <code>&lt;p&gt;&lt;/p&gt;</code>.</span>
+          <span class="ex">Почему так: чтобы код можно было форматировать удобно для человека, и это не влияло на вид страницы.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">text-decoration: none</code></div>
+        <p class="def">Убрать подчёркивание у ссылки. <code>decoration</code> = «украшение», <code>none</code> = «никакого». Меню обычно делают без подчёркиваний, чтобы не рябило.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">Rename-Item</code><span class="en">переименовать</span></div>
+        <p class="def"><code>Rename-Item .\ISTORIYA.txt istoriya.html</code> — сначала что переименовываем, потом как назвать.
+          <span class="ex">Частая беда: <code>notepad ISTORIYA</code> без расширения — Блокнот сам дописал <code>.txt</code>, и вместо веб-страницы вышел текстовый файл. <strong>Расширение — то, по чему компьютер узнаёт тип файла.</strong></span>
+          <span class="ex">Имена держать строчными: регистр букв имеет значение, когда сайт живёт в интернете.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">&lt;figure&gt;</code> и <code class="chip">&lt;figcaption&gt;</code></div>
+        <p class="def"><code>&lt;figure&gt;</code> — «иллюстрация», коробка для картинки вместе с подписью. <code>&lt;figcaption&gt;</code> — сама подпись (caption).
+          <span class="ex">Зачем коробка: чтобы браузер понимал — подпись относится <strong>к этой</strong> картинке, а не просто текст рядом.</span>
+          <span class="ex">Подпись делают мельче обычного текста и приглушённого цвета — она не должна спорить с фотографией.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">text-align</code><span class="en">выравнивание текста</span></div>
+        <p class="def"><code>left</code> слева · <code>center</code> по центру · <code>right</code> справа.
+          <span class="ex">⚠️ Не путать с <code>margin: 0 auto</code>: тот двигает <strong>саму коробку</strong>, а <code>text-align</code> двигает <strong>текст внутри</strong> коробки.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Граница HTML и CSS</span></div>
+        <p class="def">Граница — тег <code>&lt;style&gt;</code>. <strong>Всё, что между <code>&lt;style&gt;</code> и <code>&lt;/style&gt;</code> — это CSS. Всё остальное в файле — HTML.</strong>
+          <span class="ex">Три признака на глаз: скобки (<code>&lt; &gt;</code> у HTML, <code>{ }</code> у CSS) · точка с запятой в конце строки бывает только в CSS · HTML отвечает «что есть», CSS — «как выглядит».</span>
+          <span class="ex"><strong>HTML — это весь файл целиком. CSS — только кусочек внутри <code>&lt;style&gt;</code>.</strong> Новички думают «HTML = то, что в <code>&lt;body&gt;</code>». Нет: <code>&lt;head&gt;</code>, <code>&lt;title&gt;</code>, <code>&lt;script&gt;</code> — тоже HTML.</span>
+          <span class="ex">Аналогия: <code>&lt;style&gt;</code> — коробка, подписанная по-русски, а внутри бумаги на английском. Коробка — HTML, бумаги — CSS.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Правило и сам элемент — разное</span></div>
+        <p class="def">В <code>&lt;style&gt;</code> пишут <code>img { ... }</code> — это <strong>правило оформления</strong> для всех картинок. В <code>&lt;body&gt;</code> пишут <code>&lt;img src="..."&gt;</code> — это <strong>сама картинка</strong> на странице.
+          <span class="ex">Признак простой: <strong>угловые скобки <code>&lt; &gt;</code> бывают только в HTML</strong>, в CSS их нет никогда.</span>
+          <span class="ex">Аналогия: правило «все стулья покрасить в белый» — одно. Сам стул в комнате — другое. В список правил стул не поставишь.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Где брать картинки</span></div>
+        <p class="def">В Google картинки брать <strong>нельзя</strong> — почти все чужие, с авторским правом. Есть сайты, где фото выложены специально для свободного использования: <strong>Wikimedia Commons</strong>, оттуда же берут фото для Википедии.
+          <span class="ex">Скачивать сразу в папку проекта, имя менять на латиницу без пробелов. Расширение (<code>.jpg</code>) не трогать.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">class</span><span class="en">имя-бирка</span></div>
+        <p class="def">Имя, которое вешают на коробку, чтобы к ней можно было обратиться из CSS.
+          <span class="ex">В HTML: <code>&lt;h1 class="imya"&gt;Backy&lt;/h1&gt;</code> · В CSS: <code>.imya { font-size: 100px; }</code></span>
+          <span class="ex">Аналогия: коробки на складе подписаны маркером. Без подписи не найдёшь.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Правило CSS</span></div>
+        <p class="def">Форма записи всегда одна: <strong>кому { что : сколько ; }</strong>
+          <span class="ex"><code>.imya</code> — кому. <strong>Точка перед словом значит «это класс»</strong>.</span>
+          <span class="ex"><code>{ }</code> — фигурные скобки, внутри список настроек. <code>;</code> в конце строки обязательна.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Частые настройки CSS</span></div>
+        <p class="def"><code>font-size</code> — размер шрифта · <code>font-weight</code> — толщина (обычный 400, жирный 800) · <code>color</code> — цвет текста.
+          <span class="ex"><code>margin</code> — отступ снаружи коробки · <code>padding</code> — отступ внутри неё.</span>
+          <span class="ex"><code>letter-spacing</code> — между буквами, минус = плотнее · <code>line-height</code> — высота строки.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">px</span><span class="en">пиксель</span></div>
+        <p class="def">Одна точка на экране. Самая частая единица измерения в CSS.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Код цвета</span><span class="en">#21e6a0</span></div>
+        <p class="def">Решётка и шесть знаков — три пары: красный, зелёный, синий. Каждая пара от <code>00</code> (нисколько) до <code>ff</code> (максимум).
+          <span class="ex"><code>#ff0000</code> красный · <code>#00ff00</code> зелёный · <code>#000000</code> чёрный · <code>#ffffff</code> белый.</span>
+          <span class="ex">Где брать: в Google найти «color picker» — выбираешь мышкой, получаешь код.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Переменная CSS</span><span class="en">--imya</span></div>
+        <p class="def">Коробочка с именем, в которую положили значение. Два минуса в начале — признак переменной.
+          <span class="ex"><strong>Объявили:</strong> <code>--zelenyy: #21e6a0;</code> · <strong>Используем:</strong> <code>color: var(--zelenyy);</code></span>
+          <span class="ex"><code>var()</code> значит «возьми значение из коробочки».</span>
+          <span class="ex">Зачем: поменял одну строку — цвет сменился во всех местах сразу. Как номер мамы в контактах телефона.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">padding</code><span class="en">отступ внутри</span></div>
+        <p class="def">Расстояние между стенкой коробки и текстом внутри неё. Коробка от этого растёт.
+          <span class="ex">Аналогия: поролон внутри коробки, вокруг телефона.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">margin</code><span class="en">отступ снаружи</span></div>
+        <p class="def">Расстояние между этой коробкой и соседними. Сама коробка не меняется.
+          <span class="ex">Аналогия: пустое место на полке между коробками.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">&lt;canvas&gt;</code><span class="en">холст</span></div>
+        <p class="def">Пустой прямоугольник для рисования. Сам по себе пустой — всё рисует JavaScript.
+          <span class="ex">Аналогия: HTML ставит мольберт с чистым холстом, JavaScript — художник с кистью.</span>
+          <span class="ex"><code>&lt;img&gt;</code> — готовая картинка файлом. <code>&lt;canvas&gt;</code> — программа рисует сама, прямо в браузере.</span>
+          <span class="ex">Где нужен: игры, графики, онлайн-редакторы, карты. Всё, что заранее не нарисуешь.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">id и class</span></div>
+        <p class="def"><code>class</code> — бирка для <strong>многих</strong> элементов. <code>id</code> — имя для <strong>одного</strong>, уникальное, повторять нельзя.
+          <span class="ex">В CSS: к классу через точку <code>.rabota</code>, к id через решётку <code>#matrica</code>.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Как работает анимация</span></div>
+        <p class="def">Как мультик: много картинок показывают одну за другой, глаз видит движение. Компьютер перерисовывает экран 18 раз в секунду, каждый раз чуть иначе.
+          <span class="ex"><code>setInterval(risovat, 55)</code> — «повторяй функцию каждые 55 миллисекунд». Больше число — медленнее движение.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">prefers-reduced-motion</code></div>
+        <p class="def">Системная настройка «уменьшить движение». Её включают люди, которых укачивает от анимаций. Браузер сообщает о ней сайту, и сайт останавливает всю анимацию.
+          <span class="ex">Если на сайте вдруг ничего не двигается — проверь: мигает ли курсор, плывут ли фоны. Не мигает вообще ничего → дело в настройке Windows, а не в коде.</span>
+          <span class="ex">Включить обратно: Пуск → Параметры → Специальные возможности → Визуальные эффекты → «Эффекты анимации» → Вкл.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">:hover</code><span class="en">наведение мышкой</span></div>
+        <p class="def">«Когда мышка сверху». Пишется через двоеточие после бирки: <code>.rabota:hover { ... }</code>
+          <span class="ex">Внутри указывают <strong>только то, что меняется</strong> при наведении. Обычное состояние описано отдельно, выше.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">transform: translateY(-5px)</code></div>
+        <p class="def">Сдвинуть элемент по вертикали. <strong>Минус — вверх</strong>, плюс — вниз.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">transition</code><span class="en">переход</span></div>
+        <p class="def">«Меняйся не сразу, а за указанное время». <code>transition: transform 0.35s</code> — что меняем и за сколько. <code>s</code> = секунды.
+          <span class="ex"><code>0s</code> резкий скачок · <code>0.35s</code> плавно и приятно · <code>3s</code> вязко, будто тормозит.</span>
+          <span class="ex">Без этой строки анимации нет вообще — элемент прыгает мгновенно.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">border</code><span class="en">рамка</span></div>
+        <p class="def">Три значения через пробел, всегда в этом порядке: <strong>толщина, тип, цвет</strong>.
+          <span class="ex"><code>border: 1px solid var(--ramka);</code></span>
+          <span class="ex">Типы линии: <code>solid</code> сплошная · <code>dashed</code> пунктир · <code>dotted</code> точки.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">border-radius</code><span class="en">скругление</span></div>
+        <p class="def">Скругляет углы коробки. Чем больше число, тем круглее. <code>0</code> — острые углы.
+          <span class="ex"><code>border-radius: 50%</code> превращает квадрат в круг — половина от размера коробки. Так сделано круглое фото.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Два числа в отступе</span></div>
+        <p class="def"><code>padding: 26px 28px</code> — первое число вертикаль (сверху и снизу), второе горизонталь (слева и справа).
+          <span class="ex">Одна сторона отдельно: <code>margin-bottom</code>, <code>margin-top</code>, <code>padding-left</code> и так далее.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">:root</code></div>
+        <p class="def">«Корень», самое начало документа. Тут объявляют переменные — палитра художника, все краски в одном месте.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">Ctrl + U</code></div>
+        <p class="def">Показать исходный код открытого сайта. Работает на <strong>всех</strong> сайтах — YouTube, Google, Instagram. Везде внутри тот же HTML.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">Ctrl + F</code></div>
+        <p class="def">Поиск по файлу в Блокноте. Незаменим, когда код длинный.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">&lt;!DOCTYPE html&gt;</code></div>
+        <p class="def">«Дальше идёт современный HTML». Самая первая строка файла.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">&lt;head&gt;</code></div>
+        <p class="def">«Голова» — служебная часть. На экране <strong>не видна</strong>.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">&lt;body&gt;</code></div>
+        <p class="def">«Тело» — всё, что видно глазами.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">&lt;script&gt;</code></div>
+        <p class="def">Внутри лежит JavaScript — программа. Ничего не показывает, а <strong>действует</strong>.
+          <span class="ex"><code>&lt;p&gt;</code> — текст для чтения · <code>&lt;style&gt;</code> — правила оформления · <code>&lt;script&gt;</code> — команды, которые выполняются.</span>
+          <span class="ex">Ставят в самом конце <code>&lt;body&gt;</code>: скрипт работает с тем, что уже нарисовано. Поставишь наверху — запустится раньше и ничего не найдёт.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Голова или тело?</span></div>
+        <p class="def">Простое правило: <strong>не видно на странице → в <code>&lt;head&gt;</code>. Видно → в <code>&lt;body&gt;</code>.</strong>
+          <span class="ex"><code>&lt;head&gt;</code> — инструкции для браузера, не текст для человека. Как техпаспорт машины: важен, но на дороге не виден.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Разделы страницы</span></div>
+        <p class="def">Почти любой сайт устроен так, сверху вниз:
+          <span class="ex"><strong>header</strong> шапка — логотип, меню · <strong>hero</strong> первый экран — крупный заголовок, фото</span>
+          <span class="ex"><strong>sections</strong> контент — о нас, услуги, работы · <strong>footer</strong> подвал — контакты, копирайт</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Как читать длинный код</span></div>
+        <p class="def">Каша получается, когда читаешь построчно. Читать надо <strong>блоками, по отступам слева</strong> — чем больше отступ, тем глубже вложенность. Как оглавление книги.
+          <span class="ex">Приём: найди <code>&lt;body&gt;</code> и смотри только на теги с одинаковым отступом. Это верхний уровень. Внутрь лезь, когда нужен конкретный кусок.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Слои на экране</span></div>
+        <p class="def"><strong>Порядок в коде задаёт порядок слоёв: кто ниже в коде — тот выше на экране.</strong>
+          <span class="ex">Как стёкла одно над другим: холст с символами внизу, тёмная плёнка посередине, текст сверху.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">&lt;title&gt;</code></div>
+        <p class="def">Надпись на вкладке браузера. Лежит в <code>&lt;head&gt;</code>, поэтому на странице не видна.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">&lt;meta charset="utf-8"&gt;</code></div>
+        <p class="def">Кодировка. Без неё вместо русских букв «кракозябры».</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">&lt;h1&gt;</code> … <code class="chip">&lt;h6&gt;</code></div>
+        <p class="def">Заголовки. <code>h1</code> — главный, дальше каждый мельче.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">&lt;p&gt;</code><span class="en">paragraph</span></div>
+        <p class="def">Абзац обычного текста.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">&lt;a href="..."&gt;</code><span class="en">anchor, ссылка</span></div>
+        <p class="def">Ссылка на другую страницу. То, из чего вообще состоит интернет.
+          <span class="ex"><code>&lt;a href="https://google.com"&gt;Гугл&lt;/a&gt;</code> — <code>href</code> куда ведёт, между тегами то, что видно.</span>
+          <span class="ex">Открыть в новой вкладке: добавить <code>target="_blank"</code>. Так делают для чужих сайтов — человек уходит, а твоя страница остаётся открытой.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">&lt;ul&gt;</code> и <code class="chip">&lt;li&gt;</code></div>
+        <p class="def"><code>&lt;ul&gt;</code> — сам список (unordered list, маркированный), коробка для пунктов. <code>&lt;li&gt;</code> — один пункт (list item), каждый в своей паре тегов.
+          <span class="ex">Точки перед пунктами браузер ставит сам.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Три способа обратиться в CSS</span></div>
+        <p class="def"><strong>Точка — класс. Решётка — id. Без знака — сам тег.</strong>
+          <span class="ex"><code>h1 { }</code> — ко всем тегам <code>h1</code> на странице.</span>
+          <span class="ex"><code>.imya { }</code> — только к тем, у кого <code>class="imya"</code>.</span>
+          <span class="ex"><code>#matrica { }</code> — к одному элементу с <code>id="matrica"</code>.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">margin: 0 auto</code></div>
+        <p class="def">Приём для центрирования блока. Сверху и снизу ноль, по бокам «сколько получится» — значит поровну.
+          <span class="ex">Работает вместе с <code>max-width</code>: задаёшь ширину и ставишь по центру экрана.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">index.html</span></div>
+        <p class="def">Особое имя. Браузер открывает именно этот файл, когда заходит в папку сайта. «Главная страница».</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Markdown</span><span class="en">.md</span></div>
+        <p class="def">Простой язык разметки для текстов. Решётка <code>#</code> в начале строки — заголовок.
+          <span class="ex">Файлы <code>КОНСПЕКТ.md</code> и <code>README.md</code> написаны на нём.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">README.md</span><span class="en">read me</span></div>
+        <p class="def">Визитка проекта. GitHub показывает её прямо на главной странице репозитория: что это, как поставить, как пользоваться.
+          <span class="ex">Открыл незнакомый проект — первым делом читай README.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Знаки Markdown</span></div>
+        <p class="def"><code>#</code> — заголовок 1-го уровня, самый крупный. <code>##</code> — помельче, до шести решёток.
+          <span class="ex"><code>-</code> в начале строки — пункт списка · <code>**текст**</code> — жирный.</span>
+          <span class="ex">Пустая строка между блоками обязательна, иначе Markdown слепит их в один абзац.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Экранирование</span><span class="en">escape</span></div>
+        <p class="def">Обратный слэш <code>\</code> перед знаком значит «не считай его командой, покажи как есть».
+          <span class="ex"><code>\#</code> покажет решётку текстом, заголовка не будет.</span>
+          <span class="warnline">Ловушка: при копировании текста из чата слэши цепляются сами к знакам <code>#</code>, <code>*</code>, <code>-</code>. После вставки всегда проверяй файл через <code>Get-Content</code>.</span></p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= GIT ================= -->
+  <section class="group" id="git">
+    <h2>Git</h2>
+    <p class="groupnote">Машина времени для файлов. Хранит все прежние версии, не только последнюю.</p>
+    <div class="entries">
+
+      <div class="entry">
+        <div class="key"><span class="ru">Git</span></div>
+        <p class="def">Программа на твоём компьютере. Делает «фотографии» файлов, к любой можно вернуться.
+          <span class="ex">Аналогия: на столе один лист — текущий. В ящике стола Git сложил копии всех прежних.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Репозиторий</span><span class="en">repository, «репо»</span></div>
+        <p class="def">Папка, за которой Git следит. Внутри появляется скрытая папка <code>.git</code> — там история. Не трогать.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Коммит</span><span class="en">commit</span></div>
+        <p class="def">Одна сохранённая версия. Фотография файлов с подписью и номером.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Номер коммита</span><span class="en">hash</span></div>
+        <p class="def">Уникальный код фотографии, например <code>ccf78ea</code>. Хватает первых 7 знаков. По нему возвращаются к этой версии.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Три места файла</span></div>
+        <p class="def">Аналогия — отправка посылки.
+          <span class="ex"><strong>1.</strong> Твоя папка — вещи разбросаны по комнате.
+          <strong>2.</strong> Промежуточная зона <em>(staging, индекс)</em> — сложил нужное в коробку.
+          <strong>3.</strong> История Git — коробку заклеили и отправили.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Зачем «коробка»</span></div>
+        <p class="def">Чтобы самому выбирать, что попадёт в фотографию. Поправил за день три разных вещи — сохрани их тремя коммитами с разными подписями. Потом легче искать.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">git init</code><span class="en">initialize</span></div>
+        <p class="def">Поставить Git в папку. Делается <strong>один раз</strong>. Нужен не каждой папке — только там, где что-то создаёшь и переделываешь.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">git status</code></div>
+        <p class="def">Что у меня сейчас происходит? Ничего не меняет — как посмотреть на градусник.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">git diff</code></div>
+        <p class="def">Что именно изменилось с последнего сохранения. Игра «найди отличия», а <code>git diff</code> — ответы к ней.
+          <span class="ex"><code>+</code> строку добавили · <code>−</code> строку убрали · без знака — соседи для контекста.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">git add имя-файла</code></div>
+        <p class="def">Выбрать файл для сохранения — положить в чемодан. Сохранения ещё нет.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">git add .</code></div>
+        <p class="def">Добавить все изменённые файлы разом. Точка = «всё, что тут есть».
+          <span class="warnline">Пробел перед точкой обязателен. Берёт всё подряд — сначала всегда <code>git status</code>, посмотреть, что берёшь.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">git commit -m "подпись"</code></div>
+        <p class="def">Сохранить в историю. <code>-m</code> = message, подпись. Кавычки нужны, чтобы Git понял: несколько слов — это одна фраза.
+          <span class="ex">Подпись коротко и по делу, отвечает на вопрос «что изменилось?».</span>
+          <span class="warnline">Без <code>-m</code> откроется редактор vim. Всегда пиши подпись сразу.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">git log</code></div>
+        <p class="def">Список всех коммитов, сверху свежие. Для каждого: номер, кто, когда, подпись.
+          <span class="ex">Короткий вид: <code>git log --oneline</code> · последние пять: <code>git log -5</code></span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">git show НОМЕР:файл</code></div>
+        <p class="def">Посмотреть старую версию файла. Файл на диске не меняется.
+          <span class="ex">Пишется слитно, без пробелов вокруг двоеточия: <code>git show ccf78ea:privet.html</code></span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">git restore файл</code></div>
+        <p class="def">Отменить свою правку — вернуть файл как в последнем сохранении. Отменяет все правки разом, искать их вручную не надо.
+          <span class="warnline">Без имени файла не работает: <code>fatal: you must specify path(s) to restore</code>. Надо указать что восстанавливать.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">git restore --source=НОМЕР файл</code></div>
+        <p class="def">Прыгнуть в прошлое — вернуть файл как в старом коммите. Файл перезапишется, но пока правка закоммичена, её всегда можно достать обратно.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Ответы git status</span></div>
+        <p class="def"><code>Changes not staged for commit</code> — файл правил, но в чемодан не клал.
+          <span class="ex"><code>Changes to be committed</code> — лежит в чемодане, ждёт коммита.</span>
+          <span class="ex"><code>nothing to commit, working tree clean</code> — <strong>лучший ответ</strong>, всё в истории.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">new file и modified</span></div>
+        <p class="def"><code>new file</code> — Git видит файл впервые. <code>modified</code> — файл был раньше, ты его изменил.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Отчёт коммита</span></div>
+        <p class="def"><code>1 file changed, 8 insertions(+), 1 deletion(-)</code> — считает <strong>строки</strong>, не буквы. Правку одной строки Git считает как две операции: убрал старую, добавил новую.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Git молчит</span></div>
+        <p class="def">При успехе <code>git add</code> и <code>git restore</code> ничего не печатают. Нет ответа = нет ошибок.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Untracked files</span><span class="en">файлы без слежки</span></div>
+        <p class="def">Файлы, о которых Git знает, но в историю их не берёт — пока не скажешь <code>git add</code>.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">.gitignore</code></div>
+        <p class="def">Список «вот это игнорируй». Git перестаёт замечать перечисленные файлы и не напоминает о них в <code>git status</code>.
+          <span class="ex">Имя начинается с точки, расширения нет. Точка в начале имени на Linux и Mac значит «скрытый файл».</span>
+          <span class="ex">Сам <code>.gitignore</code> в историю коммитят — он полезен и другим людям в проекте.</span>
+          <span class="warnline">Правило действует только на файлы, которых Git ещё не знает. Кто уже попал в историю — по списку не выйдет. Поэтому <code>.gitignore</code> заводят сразу, до первого коммита.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Маски в .gitignore</span></div>
+        <p class="def">Одна строка — одно правило. <strong>Звёздочка <code>*</code></strong> значит «любое имя».
+          <span class="ex"><code>musor.txt</code> — этот файл · <code>*.log</code> — все файлы с расширением .log · <code>temp/</code> — вся папка целиком.</span>
+          <span class="ex">Звёздочка набирается <code>Shift + 8</code> на английской раскладке.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">HEAD</span></div>
+        <p class="def">Указатель «я сейчас здесь». Показывает, на каком коммите и на какой ветке ты стоишь.
+          <span class="ex">В <code>git log --oneline</code> видно как <code>(HEAD -&gt; master)</code>.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Метки в git log</span></div>
+        <p class="def"><code>(HEAD -&gt; master)</code> — где я сейчас. <code>(имя-ветки)</code> — докуда доехала эта ветка. <code>(origin/master)</code> — докуда доехал GitHub.
+          <span class="ex">Если <code>origin/master</code> отстал — значит надо сделать <code>git push</code>.</span></p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= ВЕТКИ ================= -->
+  <section class="group" id="branch">
+    <h2>Ветки</h2>
+    <p class="groupnote">Черновик и чистовик. Пробуешь на дорожке, основная версия цела.</p>
+    <div class="entries">
+
+      <div class="entry">
+        <div class="key"><span class="ru">Ветка</span><span class="en">branch</span></div>
+        <p class="def">Отдельная дорожка для экспериментов. Правишь на ней — главная версия не трогается. Получилось — соединяешь. Не получилось — стёр ветку, потерь нет.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Ветка — не папка</span></div>
+        <p class="def">По ветке нельзя ходить через <code>cd</code>. Папка одна и та же, меняется только <strong>содержимое файлов</strong> внутри неё.
+          <span class="ex">Git переписывает файлы на диске при переключении — как меняет декорации на сцене.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">master</span></div>
+        <p class="def">Главная ветка. Создаётся сама при <code>git init</code>.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">git branch</code></div>
+        <p class="def">Показать список веток. <strong>Звёздочка <code>*</code></strong> — где ты сейчас.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">git switch -c имя</code></div>
+        <p class="def">Создать новую ветку и сразу перейти на неё. <code>-c</code> = create, «создай».</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">git switch имя</code></div>
+        <p class="def">Перейти на существующую ветку. Понимает только имена веток — не файлов и не папок.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">git merge имя</code></div>
+        <p class="def">Влить ветку в текущую. Правило: сначала встань туда, <strong>куда</strong> вливаешь.
+          <span class="ex"><code>git switch master</code> → <code>git merge proba</code></span>
+          <span class="ex">Ответ <code>Fast-forward</code> — «перемотка вперёд», слияние без конфликтов.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">git branch -d имя</code></div>
+        <p class="def">Удалить ветку. <code>-d</code> = delete. Работа не пропадает: если ветка влита в <code>master</code>, удаляется только дорожка.
+          <span class="warnline">Нельзя удалить ветку, на которой стоишь — как пилить сук под собой. Сначала уйди на другую.</span></p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= КОНФЛИКТЫ ================= -->
+  <section class="group" id="conflict">
+    <h2>Конфликты при слиянии</h2>
+    <p class="groupnote">Git не угадывает, чья версия лучше. Честно говорит: решай ты.</p>
+    <div class="entries">
+
+      <div class="entry">
+        <div class="key"><span class="ru">Конфликт</span><span class="en">merge conflict</span></div>
+        <p class="def">Две ветки поправили <strong>одну и ту же строку</strong> по-разному. Git слить сам не может.
+          <span class="ex">Если ветки правили <em>разные</em> строки — сливает молча, без вопросов.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Ответ про конфликт</span></div>
+        <p class="def"><code>Auto-merging file.txt</code> — пробую слить сам.
+          <span class="ex"><code>CONFLICT (content): Merge conflict in file.txt</code> — не смог, спор в этом файле.</span>
+          <span class="ex"><code>Automatic merge failed; fix conflicts and then commit</code> — чини сам, потом коммить.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Метки конфликта</span></div>
+        <p class="def">Git вписывает в файл служебные значки:
+          <span class="ex"><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> — начало спора, ниже <strong>моя</strong> версия.</span>
+          <span class="ex"><code>=======</code> — разделитель: выше моё, ниже чужое.</span>
+          <span class="ex"><code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; имя-ветки</code> — конец спора.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Как чинить</span></div>
+        <p class="def"><strong>1.</strong> Открыть файл, стереть все строки со значками. <strong>2.</strong> Оставить нужный текст — можно одну версию, можно обе. <strong>3.</strong> Сохранить обычным циклом:
+          <span class="ex"><code>git add имя-файла</code> → <code>git commit -m "текст"</code></span>
+          <span class="ex">Здесь <code>git add</code> значит ещё и «конфликт улажен, я разобрался». После него Git разрешит коммит.</span></p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= GITHUB ================= -->
+  <section class="group" id="hub">
+    <h2>GitHub</h2>
+    <p class="groupnote">Git — программа на компьютере. GitHub — сайт в интернете. Git работает и без GitHub.</p>
+    <div class="entries">
+
+      <div class="entry">
+        <div class="key"><span class="ru">GitHub</span></div>
+        <p class="def">Сайт, куда копируют папку вместе со всей историей. Облако для кода.
+          <span class="ex">Зачем: копия не потеряется · можно дать ссылку человеку · работодатели смотрят туда.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">origin</span></div>
+        <p class="def">Кличка адреса твоего репозитория на GitHub. Как «мама» в телефоне вместо длинного номера.
+          <span class="ex">У всех она одинаковая — так принято во всём мире. Разный за ней сам адрес.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">git remote add origin АДРЕС</code></div>
+        <p class="def">«Git, запомни этот адрес под кличкой origin». Один раз на папку.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">git remote -v</code></div>
+        <p class="def">Посмотреть, какой адрес записан. Две строки: <code>(push)</code> — отправить наверх, <code>(fetch)</code> — забрать вниз.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">git push</code></div>
+        <p class="def">Отправить свои коммиты на GitHub. Первый раз пишется длинно — <code>git push -u origin master</code>, дальше просто <code>git push</code>.
+          <span class="ex"><code>-u</code> = upstream, «запомни, куда отправлять». Git записывает связку <code>master → origin/master</code> и дальше подставляет её сам.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">git clone АДРЕС имя-папки</code></div>
+        <p class="def">Скачать репозиторий с GitHub себе. Приходят не только файлы, но и <strong>вся история</strong>. Адрес <code>origin</code> прописывается сам.
+          <span class="ex">Так работают с чужими проектами: нашёл на GitHub → clone → проект у тебя.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Два места</span></div>
+        <p class="def"><code>git commit</code> сохраняет только на компьютере. <code>git push</code> отправляет на GitHub. Между ними бывает разрыв — Git пишет его во второй строке <code>git status</code>:
+          <span class="ex"><code>ahead of 'origin/master' by 1 commit</code> — надо сделать push.</span>
+          <span class="ex"><code>up to date with 'origin/master'</code> — уже отправлено.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Public и Private</span></div>
+        <p class="def">Public — репозиторий виден всем. Private — только тебе.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Вход из терминала</span></div>
+        <p class="def">При первом <code>push</code> открывается окно <code>Connect to GitHub</code>. Пароль спрашивают один раз, дальше Git его помнит.
+          <span class="ex">Если кнопка «Sign in with your browser» не срабатывает — жми «Sign in with a code».</span></p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= САЙТ В ИНТЕРНЕТЕ ================= -->
+  <section class="group" id="web">
+    <h2>Сайт в интернете</h2>
+    <p class="groupnote">Репозиторий — склад, там лежит код. Сайт — витрина, её видят люди.</p>
+    <div class="entries">
+
+      <div class="entry">
+        <div class="key"><span class="ru">Сервер</span><span class="en">server</span></div>
+        <p class="def">Компьютер, который работает круглосуточно и раздаёт файлы другим по сети. От <em>to serve</em> — «обслуживать, подавать». Как официант.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Клиент</span><span class="en">client</span></div>
+        <p class="def">Тот, кто просит. Твой компьютер, когда ты открываешь сайт: «дай мне страницу» — «вот она».</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Хостинг</span><span class="en">hosting</span></div>
+        <p class="def">Услуга: кто-то пускает тебя на свой сервер и разрешает положить туда файлы.
+          <span class="ex">Сервер — вещь, здание склада. Хостинг — аренда места в нём. Или так: сервер — квартира, хостинг — сдача её внаём.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">GitHub Pages</span></div>
+        <p class="def">Бесплатный хостинг от GitHub. Берёт файлы из твоего репозитория и показывает их как настоящий сайт.
+          <span class="ex">Включается один раз: <code>Settings → Pages → Branch: master, папка / (root) → Save</code>.</span>
+          <span class="ex">Адрес: <code>https://ИМЯ-АККАУНТА.github.io/ИМЯ-РЕПОЗИТОРИЯ/</code></span>
+          <span class="ex">Дальше следит за веткой <code>master</code> сам: сделал <code>git push</code> — сайт обновился через минуту.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Деплой</span><span class="en">deployment</span></div>
+        <p class="def">«Выкладка» — сборка и публикация сайта. На странице репозитория справа: <code>Deployments ✅ github-pages</code> значит «готово, опубликовано».</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Три места, где живёт сайт</span></div>
+        <p class="def">Аналогия — пошив одежды.
+          <span class="ex"><strong>1.</strong> Папка на компьютере — мастерская, работаю руками.</span>
+          <span class="ex"><strong>2.</strong> Репозиторий на GitHub — склад, попадает через <code>git push</code>.</span>
+          <span class="ex"><strong>3.</strong> GitHub Pages — витрина, включил один раз в настройках.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Мастерская и витрина</span></div>
+        <p class="def">Правил файл, обновил браузер — ничего не поменялось? Значит смотришь не туда. Посмотри на адрес в браузере:
+          <span class="ex"><code>file:///C:/...</code> — файл на компьютере. Мастерская, тут правлю.</span>
+          <span class="ex"><code>https://...github.io/...</code> — сайт в интернете. Витрина, тут смотрят люди.</span>
+          <span class="ex">Правка попадает на витрину только через <code>git add</code> → <code>git commit</code> → <code>git push</code>.</span>
+          <span class="ex">Открыть местную копию: <code>start .\index.html</code></span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Склад и витрина</span></div>
+        <p class="def">Один и тот же проект, два адреса.
+          <span class="ex"><code>github.com/имя/portfolio</code> — склад. Видно код, файлы, историю. Для разработчиков.</span>
+          <span class="ex"><code>имя.github.io/portfolio</code> — витрина. Видно готовую страницу. Для всех.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Порядок для нового проекта</span></div>
+        <p class="def">Весь путь от пустой папки до сайта в интернете:
+          <span class="ex"><code>mkdir имя</code> → <code>cd имя</code> → <code>git init</code> → <code>notepad .gitignore</code></span>
+          <span class="ex"><code>git add .</code> → <code>git commit -m "pervaya versiya"</code></span>
+          <span class="ex"><code>git remote add origin АДРЕС</code> → <code>git push -u origin master</code></span>
+          <span class="warnline">Новый проект — своя отдельная папка. Не создавай её внутри другого репозитория: Git начнёт считать её частью чужого проекта.</span></p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= ОШИБКИ ================= -->
+  <section class="group" id="oops">
+    <h2>Ошибки и как их читать</h2>
+    <p class="groupnote">Ошибаться нормально. Компьютер обычно сам подсказывает, что не так.</p>
+    <div class="entries">
+
+      <div class="entry">
+        <div class="key"><span class="ru">warning и error</span></div>
+        <p class="def"><code>warning</code> — предупреждение, к сведению, можно жить дальше. <code>error</code> — ошибка, надо чинить.
+          <span class="ex">Часто вылезает <code>warning: LF will be replaced by CRLF</code>. Windows и Linux по-разному помечают конец строки. Игнорируем.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">Имя "cl" не распознано</code></div>
+        <p class="def">Опечатка в команде. Такой команды нет. Проверь по буквам.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">'commin' is not a git command</code></div>
+        <p class="def">Опечатка в команде Git. Он сам подскажет похожую: <em>The most similar command is commit</em>.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">Nothing specified, nothing added</code></div>
+        <p class="def">Забыл имя файла после <code>git add</code>.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">No configured push destination</code></div>
+        <p class="def">Сделал <code>git push</code>, а репозиторий на GitHub ещё не создан — Git не знает, куда отправлять.
+          <span class="ex">Лечится шагами 7–9 из шпаргалки «Новый проект с нуля» вверху страницы.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">'add.' is not a git command</code></div>
+        <p class="def">Потерялся пробел. <code>git add.</code> слитно — Git решил, что это название команды. Надо <code>git add .</code>
+          <span class="warnline">Дальше цепочка разваливается: файл в коробку не попал → <code>commit</code> сохранять нечего → <code>push</code> отправлять нечего.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">not a git repository</code></div>
+        <p class="def">Git в этой папке не стоит, либо ты стоишь не в той папке. Проверь <code>pwd</code>.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">'remove' is not a git command</code></div>
+        <p class="def">Опечатка: <code>remove</code> вместо <code>remote</code>. Разные слова: <em>remote</em> — удалённый, адрес. <em>remove</em> — удалить.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">Инструкция switch должна содержать…</code></div>
+        <p class="def">Забыл слово <code>git</code> в начале. У PowerShell есть своё слово <code>switch</code> — он и перехватил команду.
+          <span class="ex">Правило: все команды Git начинаются со слова <code>git</code>.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">«Нечего коммитить», а я правил файл</span></div>
+        <p class="def">Значит правка не сохранилась на диск. Git не ошибается — он смотрит на файл, а не на открытое окно Блокнота.
+          <span class="ex">Проверь: <code>Get-Content имя -Encoding utf8</code>. Что там лежит на самом деле?</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Открылся vim</span></div>
+        <p class="def">Так бывает, если написать <code>git commit</code> без <code>-m</code>. Выход: <code>Esc</code>, потом <code>:q!</code>, потом <code>Enter</code>. Коммит отменится — просто повтори с подписью.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <p class="empty" id="empty">Ничего не нашлось. Попробуй другое слово.</p>
+
+  <footer class="end">
+    Учебный словарь · пополняется по мере изучения · HTML, CSS, JavaScript, Git
+  </footer>
+
+</div>
+
+<script>
+  (function () {
+    var input = document.getElementById('q');
+    var entries = Array.prototype.slice.call(document.querySelectorAll('.entry'));
+    var sections = Array.prototype.slice.call(document.querySelectorAll('section.group'));
+    var empty = document.getElementById('empty');
+
+    entries.forEach(function (el) {
+      el.dataset.text = el.textContent.toLowerCase();
+    });
+
+    input.addEventListener('input', function () {
+      var q = input.value.trim().toLowerCase();
+      var found = 0;
+
+      entries.forEach(function (el) {
+        var hit = !q || el.dataset.text.indexOf(q) !== -1;
+        el.style.display = hit ? '' : 'none';
+        if (hit) found++;
+      });
+
+      sections.forEach(function (sec) {
+        var visible = sec.querySelectorAll('.entry:not([style*="none"])').length;
+        sec.style.display = (q && visible === 0) ? 'none' : '';
+      });
+
+      empty.style.display = (q && found === 0) ? 'block' : 'none';
+    });
+  })();
+</script>
