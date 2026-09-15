@@ -673,6 +673,41 @@
       </div>
 
       <div class="entry">
+        <div class="key"><span class="ru">Вкладка Actions на GitHub</span></div>
+        <p class="def">Где смотреть, что происходит с публикацией сайта. Жёлтый кружок — собирается · зелёная галочка — готово · красный крестик — ошибка · <strong>пусто — сборка не запускалась вообще</strong>.
+          <span class="warnline">Пустая вкладка при настроенном на вид Pages значит, что кнопку <code>Save</code> не нажимали. Лечится переключением ветки на <code>None</code> → <code>Save</code> → обратно на <code>master</code> → <code>Save</code>.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">404 на GitHub Pages — цепочка проверок</span></div>
+        <p class="def">Симптом «404» ничего не говорит о причине. Проверять по порядку: файл <code>index.html</code> в корне → репозиторий публичный → сборка запускалась → сборка прошла успешно.
+          <span class="ex">На закрытых (private) репозиториях Pages не работает.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">mkdir</code><span class="en">make directory</span></div>
+        <p class="def">«Создать папку». <code>mkdir slovar</code></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">Copy-Item</code><span class="en">скопировать</span></div>
+        <p class="def">Сначала откуда, потом куда: <code>Copy-Item "источник" "назначение"</code>
+          <span class="ex">Копирует, а не переносит — оригинал остаётся на месте. Для переноса есть <code>Move-Item</code>.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Точка с запятой в PowerShell</span></div>
+        <p class="def">«Выполни одну команду, потом другую». Позволяет писать несколько команд в одну строку:
+          <span class="ex"><code>git add . ; git commit -m "..." ; git push</code></span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Custom domain</span></div>
+        <p class="def">Раздел в настройках Pages — для своего домена вроде <code>slovar.ru</code>. Для обычной публикации не нужен, оставляй пустым.
+          <span class="ex">Нужный раздел — выше: <code>Build and deployment</code>.</span></p>
+      </div>
+
+      <div class="entry">
         <div class="key"><span class="ru">Сервер</span><span class="en">server</span></div>
         <p class="def">Компьютер, который <strong>всегда включён и всегда готов ответить</strong>. От слова serve — «обслуживать». Поэтому сайт работает, когда свой компьютер выключен.
           <span class="ex">Разговор браузера с сервером: «дай мне <code>index.html</code>» — «держи». Это <strong>запрос и ответ</strong> (request и response).</span></p>
