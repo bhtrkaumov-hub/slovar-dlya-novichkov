@@ -673,6 +673,26 @@
       </div>
 
       <div class="entry">
+        <div class="key"><code class="chip">&lt;iframe&gt;</code><span class="en">inline frame, встроенная рамка</span></div>
+        <p class="def">Окно в чужую страницу внутри своей. В <code>src</code> — адрес той страницы.
+          <span class="ex">Так вставляют карты и видео с YouTube — берут готовый код на их сайте.</span>
+          <span class="warnline">Высоту задавать обязательно: у <code>iframe</code> нет своего содержимого, браузер не может её вычислить. Без <code>height</code> останется около 150 пикселей.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">OpenStreetMap</span><span class="en">свободная карта</span></div>
+        <p class="def">Карта, которую делают волонтёры. Встраивается через <code>iframe</code>, регистрации и ключей не требует.
+          <span class="ex"><code>bbox</code> — границы участка: запад, юг, восток, север. <code>layer=mapnik</code> — обычный вид.</span>
+          <span class="ex"><code>%2C</code> в адресе — закодированная запятая. В адресах некоторые символы пишут кодом.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Форма не работает с диска</span></div>
+        <p class="def">⚠️ Из <code>file://</code> браузер запрещает отправку данных на чужой сервер — это защита (<strong>CORS</strong>).
+          <span class="warnline">Проверять форму только на живом сайте по <code>https://</code>. Локально она будет молчать, и код тут ни при чём.</span></p>
+      </div>
+
+      <div class="entry">
         <div class="key"><span class="ru">Вкладка Actions на GitHub</span></div>
         <p class="def">Где смотреть, что происходит с публикацией сайта. Жёлтый кружок — собирается · зелёная галочка — готово · красный крестик — ошибка · <strong>пусто — сборка не запускалась вообще</strong>.
           <span class="warnline">Пустая вкладка при настроенном на вид Pages значит, что кнопку <code>Save</code> не нажимали. Лечится переключением ветки на <code>None</code> → <code>Save</code> → обратно на <code>master</code> → <code>Save</code>.</span></p>
