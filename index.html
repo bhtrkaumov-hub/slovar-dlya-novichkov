@@ -673,6 +673,66 @@
       </div>
 
       <div class="entry">
+        <div class="key"><span class="ru">Массив</span><span class="en">array</span></div>
+        <p class="def">Список значений в одной переменной. Записывается в квадратных скобках через запятую.
+          <span class="ex"><code>var pokupki = ['хлеб', 'молоко', 'яйца'];</code></span>
+          <span class="ex">Аналогия: список покупок. Раньше в переменной лежало что-то одно — теперь целый список.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Счёт в массиве идёт с нуля</span></div>
+        <p class="def">⚠️ Главная ловушка. <code>foto[0]</code> — <strong>первый</strong> элемент, <code>foto[1]</code> — второй.
+          <span class="warnline">Не «первый, второй, третий», а «нулевой, первый, второй». Так устроено почти во всех языках программирования.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">forEach</code><span class="en">для каждого</span></div>
+        <p class="def">Цикл: «сделай это с каждым элементом списка».
+          <span class="ex"><code>foto.forEach(function (imya) { console.log(imya); });</code></span>
+          <span class="ex">JavaScript берёт первый элемент, кладёт в <code>imya</code>, выполняет функцию. Потом второй. И останавливается, когда элементы кончились.</span>
+          <span class="ex">Зачем: три пункта можно написать руками, триста — нет.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Объект</span><span class="en">object</span></div>
+        <p class="def">Описание одной вещи с несколькими свойствами. Массив — просто список, объект — набор пар «имя: значение».
+          <span class="ex"><code>{ file: 'gorod2.jpg', podpis: 'Площадь Навои' }</code></span>
+          <span class="ex">Достаём через точку: <code>snimok.file</code>. Ты это уже видел — <code>document.body</code>, <code>imya.value</code>. Та же точка.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">console.log()</code></div>
+        <p class="def">«Напечатай в консоль». Способ заглянуть внутрь программы и посмотреть, что лежит в переменной.
+          <span class="ex">Главный инструмент отладки — им пользуются постоянно. Смотреть в <code>Ctrl + Shift + I</code> → вкладка <strong>Console</strong>.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">+=</code></div>
+        <p class="def">«Добавь к тому, что уже есть». Обычное <code>=</code> затёрло бы предыдущее значение.
+          <span class="ex">В цикле без <code>+=</code> осталась бы только последняя картинка.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Кавычки внутри кавычек</span></div>
+        <p class="def">Одинарные <code>' '</code> — граница текста для JavaScript. Двойные <code>" "</code> — часть самого HTML. Поэтому не путаются.
+          <span class="ex"><code>'&lt;img src="' + imya + '" alt="Чирчик"&gt;'</code></span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Запятая между элементами массива</span></div>
+        <p class="def">⚠️ Забыл запятую между объектами — JavaScript не понимает, где кончился один и начался другой, и падает целиком.
+          <span class="ex">Запятые <strong>между</strong> элементами. После последнего не нужна.</span>
+          <span class="warnline">Та же роль, что у точки с запятой в CSS.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Рисовать разметку из данных</span></div>
+        <p class="def">Главная идея: содержимое хранится <strong>списком</strong>, а HTML рисует цикл.
+          <span class="ex">Раньше добавить фото значило написать четыре строки тегов. Теперь — одну строку данных в массив.</span>
+          <span class="ex">На этом устроены все настоящие сайты: товары, новости, сообщения приходят списком и рисуются циклом.</span></p>
+      </div>
+
+      <div class="entry">
         <div class="key"><code class="chip">&lt;iframe&gt;</code><span class="en">inline frame, встроенная рамка</span></div>
         <p class="def">Окно в чужую страницу внутри своей. В <code>src</code> — адрес той страницы.
           <span class="ex">Так вставляют карты и видео с YouTube — берут готовый код на их сайте.</span>
