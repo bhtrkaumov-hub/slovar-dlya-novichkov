@@ -673,6 +673,42 @@
       </div>
 
       <div class="entry">
+        <div class="key"><code class="chip">code .</code><span class="ru">открыть VS Code</span></div>
+        <p class="def">Запуск редактора из терминала. <code>code C:\путь\к\папке</code> — открыть папку, <code>code .</code> — открыть текущую.
+          <span class="warnline">Открывать <strong>папку целиком</strong>, а не отдельный файл. Блокнот — один документ, VS Code — весь ящик со всеми документами сразу.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Restricted Mode</span><span class="en">ограниченный режим</span></div>
+        <p class="def">⚠️ Пока папке не выдано доверие, VS Code ничего в ней не запускает — и <strong>проверка ошибок тоже отключена</strong>. Панель Problems будет пустой, даже если ошибки есть.
+          <span class="ex">Лечится: в верхней полоске <code>Manage</code> → <code>Trust</code>. Надпись внизу слева исчезнет.</span>
+          <span class="ex">Режим не зря: скачал чужой проект — не доверяй сразу. Свой код доверять можно.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">Ctrl + Shift + M</code><span class="ru">панель Problems</span></div>
+        <p class="def">Список всех ошибок в проекте с номерами строк. Надёжнее, чем высматривать красную волнистую линию.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">Ctrl + `</code><span class="ru">терминал в редакторе</span></div>
+        <p class="def">Обратный апостроф — клавиша под <code>Esc</code>, там же где <code>Ё</code>. Терминал открывается <strong>уже в папке проекта</strong>, <code>cd</code> не нужен.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">Shift + Alt + F</code><span class="ru">форматирование</span></div>
+        <p class="def">Редактор сам расставляет отступы по общепринятым правилам.
+          <span class="ex">Меняются только пробелы и переносы — код остаётся тем же, работа сайта не меняется.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Зачем редактор вместо Блокнота</span></div>
+        <p class="def">Блокнот не показывает номера строк, не подсвечивает парные скобки и молчит про опечатки. Половина всех поломок — пропущенная запятая, точка с запятой или скобка.
+          <span class="ex">Редактор видит их <strong>до сохранения</strong>: красная волнистая линия под ошибкой.</span>
+          <span class="ex">Цвета — не украшение: если строка вдруг стала вся одного цвета, забыта закрывающая кавычка.</span></p>
+      </div>
+
+      <div class="entry">
         <div class="key"><span class="ru">Массив</span><span class="en">array</span></div>
         <p class="def">Список значений в одной переменной. Записывается в квадратных скобках через запятую.
           <span class="ex"><code>var pokupki = ['хлеб', 'молоко', 'яйца'];</code></span>
