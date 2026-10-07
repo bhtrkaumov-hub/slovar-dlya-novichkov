@@ -1,3 +1,8 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Словарь новичка</title>
 
 <style>
@@ -128,30 +133,73 @@
 
   .field input {
     flex: 1;
-    font: inherit;
+    min-width: 0;
+    font-family: inherit;
+    /* 16px обязательно: на iPhone поле меньше 16px заставляет браузер
+       приближать страницу, и дальше по ней невозможно попасть пальцем */
+    font-size: 16px;
     color: var(--ink);
     background: var(--surface);
-    border: 1px solid var(--rule);
-    border-radius: 2px;
-    padding: .6rem .8rem .6rem 2.1rem;
+    border: 2px solid var(--accent);
+    border-radius: 6px;
+    padding: .7rem 2.6rem .7rem 2.6rem;
+    min-height: 2.9rem;
+    box-shadow: var(--shadow);
+    -webkit-appearance: none;
+    appearance: none;
   }
+
+  /* у type="search" Safari рисует свой крестик — убираем, у нас есть свой */
+  .field input::-webkit-search-decoration,
+  .field input::-webkit-search-cancel-button { -webkit-appearance: none; }
 
   .field input::placeholder { color: var(--ink-faint); }
 
-  .field input:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 1px;
-    border-color: transparent;
+  .field input:focus {
+    outline: 2px solid var(--accent-ink);
+    outline-offset: 2px;
+    border-color: var(--accent-ink);
   }
 
   .field .glass {
     position: absolute;
-    left: .75rem;
+    left: .7rem;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--ink-faint);
     pointer-events: none;
-    font-size: .95rem;
+    font-size: 1.05rem;
+    line-height: 1;
+  }
+
+  .field button {
+    position: absolute;
+    right: .35rem;
+    top: 50%;
+    transform: translateY(-50%);
+    /* 2.2rem ≈ 35px — палец попадает уверенно */
+    width: 2.2rem;
+    height: 2.2rem;
+    display: grid;
+    place-items: center;
+    font-size: 1rem;
+    color: var(--ink-soft);
+    background: var(--surface-alt);
+    border: 1px solid var(--rule);
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .field button:hover,
+  .field button:focus-visible {
+    color: var(--accent-ink);
+    border-color: var(--accent);
+    outline: none;
+  }
+
+  .count {
+    margin: 0;
+    font-size: .85rem;
+    color: var(--accent-ink);
   }
 
   nav.jump {
@@ -336,21 +384,27 @@
     ol.steps .what { grid-column: 2; }
   }
 </style>
+</head>
+<body>
 
 <div class="wrap">
 
   <header class="top">
-    <p class="eyebrow">HTML · CSS · JavaScript · Git</p>
+    <p class="eyebrow">Занятия 1–39 · обновлён 7 октября 2026</p>
     <h1>Словарь новичка</h1>
     <p class="lede">Все слова и команды, которые мы прошли. Забыл — открой и найди. Зубрить не надо, надо понимать.</p>
   </header>
 
   <div class="searchbar">
     <div class="field">
-      <span class="glass">⌕</span>
-      <input id="q" type="search" placeholder="Найти слово или команду — например, commit" autocomplete="off">
+      <span class="glass" aria-hidden="true">🔍</span>
+      <input id="q" type="search" inputmode="search" enterkeyhint="search"
+             placeholder="Найти слово — например, commit" autocomplete="off"
+             aria-label="Поиск по словарю">
+      <button id="clear" type="button" aria-label="Очистить поиск" hidden>✕</button>
     </div>
-    <nav class="jump">
+    <p class="count" id="count" hidden></p>
+    <nav class="jump" id="jump">
       <a href="#files">Файлы</a>
       <a href="#term">Терминал</a>
       <a href="#html">HTML</a>
@@ -360,6 +414,8 @@
       <a href="#hub">GitHub</a>
       <a href="#web">Сайт в интернете</a>
       <a href="#oops">Ошибки</a>
+      <a href="#ml">Данные и ML</a>
+      <a href="#ai">Claude</a>
     </nav>
   </div>
 
@@ -670,102 +726,6 @@
         <div class="key"><code class="chip">flex-direction</code><span class="en">направление ряда</span></div>
         <p class="def"><code>row</code> (по умолчанию) — в строку слева направо · <code>column</code> — в столбик сверху вниз.
           <span class="ex">Вместе с <code>@media</code> — главный приём адаптивности: на компьютере карточки в ряд, на телефоне в столбик. Файл один.</span></p>
-      </div>
-
-      <div class="entry">
-        <div class="key"><code class="chip">code .</code><span class="ru">открыть VS Code</span></div>
-        <p class="def">Запуск редактора из терминала. <code>code C:\путь\к\папке</code> — открыть папку, <code>code .</code> — открыть текущую.
-          <span class="warnline">Открывать <strong>папку целиком</strong>, а не отдельный файл. Блокнот — один документ, VS Code — весь ящик со всеми документами сразу.</span></p>
-      </div>
-
-      <div class="entry">
-        <div class="key"><span class="ru">Restricted Mode</span><span class="en">ограниченный режим</span></div>
-        <p class="def">⚠️ Пока папке не выдано доверие, VS Code ничего в ней не запускает — и <strong>проверка ошибок тоже отключена</strong>. Панель Problems будет пустой, даже если ошибки есть.
-          <span class="ex">Лечится: в верхней полоске <code>Manage</code> → <code>Trust</code>. Надпись внизу слева исчезнет.</span>
-          <span class="ex">Режим не зря: скачал чужой проект — не доверяй сразу. Свой код доверять можно.</span></p>
-      </div>
-
-      <div class="entry">
-        <div class="key"><code class="chip">Ctrl + Shift + M</code><span class="ru">панель Problems</span></div>
-        <p class="def">Список всех ошибок в проекте с номерами строк. Надёжнее, чем высматривать красную волнистую линию.</p>
-      </div>
-
-      <div class="entry">
-        <div class="key"><code class="chip">Ctrl + `</code><span class="ru">терминал в редакторе</span></div>
-        <p class="def">Обратный апостроф — клавиша под <code>Esc</code>, там же где <code>Ё</code>. Терминал открывается <strong>уже в папке проекта</strong>, <code>cd</code> не нужен.</p>
-      </div>
-
-      <div class="entry">
-        <div class="key"><code class="chip">Shift + Alt + F</code><span class="ru">форматирование</span></div>
-        <p class="def">Редактор сам расставляет отступы по общепринятым правилам.
-          <span class="ex">Меняются только пробелы и переносы — код остаётся тем же, работа сайта не меняется.</span></p>
-      </div>
-
-      <div class="entry">
-        <div class="key"><span class="ru">Зачем редактор вместо Блокнота</span></div>
-        <p class="def">Блокнот не показывает номера строк, не подсвечивает парные скобки и молчит про опечатки. Половина всех поломок — пропущенная запятая, точка с запятой или скобка.
-          <span class="ex">Редактор видит их <strong>до сохранения</strong>: красная волнистая линия под ошибкой.</span>
-          <span class="ex">Цвета — не украшение: если строка вдруг стала вся одного цвета, забыта закрывающая кавычка.</span></p>
-      </div>
-
-      <div class="entry">
-        <div class="key"><span class="ru">Массив</span><span class="en">array</span></div>
-        <p class="def">Список значений в одной переменной. Записывается в квадратных скобках через запятую.
-          <span class="ex"><code>var pokupki = ['хлеб', 'молоко', 'яйца'];</code></span>
-          <span class="ex">Аналогия: список покупок. Раньше в переменной лежало что-то одно — теперь целый список.</span></p>
-      </div>
-
-      <div class="entry">
-        <div class="key"><span class="ru">Счёт в массиве идёт с нуля</span></div>
-        <p class="def">⚠️ Главная ловушка. <code>foto[0]</code> — <strong>первый</strong> элемент, <code>foto[1]</code> — второй.
-          <span class="warnline">Не «первый, второй, третий», а «нулевой, первый, второй». Так устроено почти во всех языках программирования.</span></p>
-      </div>
-
-      <div class="entry">
-        <div class="key"><code class="chip">forEach</code><span class="en">для каждого</span></div>
-        <p class="def">Цикл: «сделай это с каждым элементом списка».
-          <span class="ex"><code>foto.forEach(function (imya) { console.log(imya); });</code></span>
-          <span class="ex">JavaScript берёт первый элемент, кладёт в <code>imya</code>, выполняет функцию. Потом второй. И останавливается, когда элементы кончились.</span>
-          <span class="ex">Зачем: три пункта можно написать руками, триста — нет.</span></p>
-      </div>
-
-      <div class="entry">
-        <div class="key"><span class="ru">Объект</span><span class="en">object</span></div>
-        <p class="def">Описание одной вещи с несколькими свойствами. Массив — просто список, объект — набор пар «имя: значение».
-          <span class="ex"><code>{ file: 'gorod2.jpg', podpis: 'Площадь Навои' }</code></span>
-          <span class="ex">Достаём через точку: <code>snimok.file</code>. Ты это уже видел — <code>document.body</code>, <code>imya.value</code>. Та же точка.</span></p>
-      </div>
-
-      <div class="entry">
-        <div class="key"><code class="chip">console.log()</code></div>
-        <p class="def">«Напечатай в консоль». Способ заглянуть внутрь программы и посмотреть, что лежит в переменной.
-          <span class="ex">Главный инструмент отладки — им пользуются постоянно. Смотреть в <code>Ctrl + Shift + I</code> → вкладка <strong>Console</strong>.</span></p>
-      </div>
-
-      <div class="entry">
-        <div class="key"><code class="chip">+=</code></div>
-        <p class="def">«Добавь к тому, что уже есть». Обычное <code>=</code> затёрло бы предыдущее значение.
-          <span class="ex">В цикле без <code>+=</code> осталась бы только последняя картинка.</span></p>
-      </div>
-
-      <div class="entry">
-        <div class="key"><span class="ru">Кавычки внутри кавычек</span></div>
-        <p class="def">Одинарные <code>' '</code> — граница текста для JavaScript. Двойные <code>" "</code> — часть самого HTML. Поэтому не путаются.
-          <span class="ex"><code>'&lt;img src="' + imya + '" alt="Чирчик"&gt;'</code></span></p>
-      </div>
-
-      <div class="entry">
-        <div class="key"><span class="ru">Запятая между элементами массива</span></div>
-        <p class="def">⚠️ Забыл запятую между объектами — JavaScript не понимает, где кончился один и начался другой, и падает целиком.
-          <span class="ex">Запятые <strong>между</strong> элементами. После последнего не нужна.</span>
-          <span class="warnline">Та же роль, что у точки с запятой в CSS.</span></p>
-      </div>
-
-      <div class="entry">
-        <div class="key"><span class="ru">Рисовать разметку из данных</span></div>
-        <p class="def">Главная идея: содержимое хранится <strong>списком</strong>, а HTML рисует цикл.
-          <span class="ex">Раньше добавить фото значило написать четыре строки тегов. Теперь — одну строку данных в массив.</span>
-          <span class="ex">На этом устроены все настоящие сайты: товары, новости, сообщения приходят списком и рисуются циклом.</span></p>
       </div>
 
       <div class="entry">
@@ -2279,41 +2239,304 @@
     </div>
   </section>
 
+  <!-- ================= ДАННЫЕ И ML ================= -->
+  <section class="group" id="ml">
+    <h2>Данные и Machine Learning</h2>
+    <p class="groupnote">Python, pandas, таблицы и графики. Отдельная тема от сайтов.</p>
+    <div class="entries">
+
+      <div class="entry">
+        <div class="key"><span class="ru">Цель</span><span class="en">target</span></div>
+        <p class="def">То, что хотим предсказать. Ответ. В коде принято звать <code>y</code>.
+          <span class="ex">Аналогия — врач ставит диагноз: сам диагноз это цель.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Признак</span><span class="en">feature</span></div>
+        <p class="def">То, по чему предсказываем. Подсказка. В коде принято звать <code>X</code> (большая буква).
+          <span class="ex">У врача признаки — температура, кашель, анализы.</span>
+          <span class="warnline">⚠️ Цель нельзя класть внутрь признаков: модель просто спишет ответ вместо того, чтобы учиться. Как дать ученику на экзамене лист с ответами.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Kaggle</span></div>
+        <p class="def">Сайт с бесплатными наборами данных для учёбы. Библиотека, где вместо книг таблицы с цифрами.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">CSV</span><span class="en">Comma-Separated Values</span></div>
+        <p class="def">Файл-таблица. Внутри обычный текст, значения разделены запятыми. Первая строка — <strong>шапка (header)</strong>, названия столбцов.
+          <span class="ex">Поэтому в файле на одну строку больше, чем записей: шапка не человек.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Google Colab</span></div>
+        <p class="def">Python прямо в браузере, ставить ничего не надо. Файлы грузят в папку <code>content</code> через значок 📁 слева.
+          <span class="warnline">⚠️ Загруженные файлы пропадают, если закрыть вкладку надолго. Вернулся — загрузи заново. Это не поломка.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Блокнот</span><span class="en">notebook, .ipynb</span></div>
+        <p class="def">Файл, разбитый на <strong>ячейки (cells)</strong>. Каждая запускается отдельно, результат виден сразу под ней. Запуск — <code>Ctrl + Enter</code>.
+          <span class="ex">Обычный файл с кодом — книга, читаешь целиком. Блокнот — кухня: взял ингредиент, попробовал, потом следующий.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">pandas</span><code class="chip">pd</code></div>
+        <p class="def">Библиотека для работы с таблицами. <code>pd.read_csv("файл.csv")</code> читает файл-таблицу.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">df</code><span class="en">DataFrame</span></div>
+        <p class="def">Таблица данных в pandas. Имя <code>df</code> — общепринятая традиция, так пишут все.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Пять библиотек для ML</span></div>
+        <p class="def"><code>pandas</code> (pd) — таблицы · <code>numpy</code> (np) — числа · <code>matplotlib.pyplot</code> (plt) — графики · <code>seaborn</code> (sns) — графики покрасивее · <code>sklearn</code> — инструменты для моделей.
+          <span class="ex">Короткие имена через <code>import ... as ...</code> — традиция, принятая во всём мире.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Осмотр таблицы — 6 команд</span></div>
+        <p class="def"><code>df.head(10)</code> первые строки · <code>df.tail(5)</code> последние · <code>df.shape</code> сколько строк и столбцов · <code>df.columns.tolist()</code> названия · <code>df.info()</code> типы данных · <code>df.describe()</code> статистика.
+          <span class="warnline">⚠️ <code>shape</code> и <code>columns</code> — <strong>без скобок</strong>, это готовая справка. <code>info()</code> и <code>describe()</code> — <strong>со скобками</strong>, это команда «посчитай».</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">int64</code> и <code class="chip">object</code></div>
+        <p class="def">Типы данных в столбце. <code>int64</code> — целое число, с ним можно считать. <code>object</code> — текст, считать нельзя.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">df[["a", "b"]]</code><span class="en">двойные скобки</span></div>
+        <p class="def">Выбрать несколько столбцов. Внешние скобки значат «возьми из таблицы», внутренние — «вот список имён».</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">value_counts()</code></div>
+        <p class="def">«Посчитай значения» — какие варианты встречаются в столбце и сколько раз каждый.
+          <span class="ex"><code>df["occupation"].value_counts().head(8)</code> — восемь самых частых.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Поиск проблем в данных</span></div>
+        <p class="def"><code>df.isna().sum()</code> пустые ячейки · <code>df.eq("?").sum()</code> знаки вопроса · <code>df.duplicated().sum()</code> строки-близнецы.
+          <span class="warnline">⚠️ <strong>Ноль пропусков не значит, что пропусков нет.</strong> Если «нет ответа» записали знаком <code>?</code>, pandas считает его обычным текстом и не замечает. Надо знать, как в конкретных данных помечают пропуск.</span>
+          <span class="ex">Повтор строки <strong>не доказывает</strong>, что это один человек дважды: без имени и ID два разных человека с одинаковыми ответами выглядят одинаково.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Гистограмма</span><span class="en">histogram</span></div>
+        <p class="def">Группирует числа по диапазонам и показывает, сколько записей в каждом. <code>plt.hist(df["age"], bins=15)</code>
+          <span class="ex"><strong>Корзина (bin)</strong> — один такой диапазон. <code>bins=15</code> значит «поделить на 15 кусков».</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Ящик с усами</span><span class="en">box plot</span></div>
+        <p class="def">Показывает не одно число, а <strong>разброс</strong> значений. Ящик — середина, где лежит половина всех записей. Линия внутри — <strong>медиана</strong>. Усы — основная масса. Точки за усами — выбросы, редкие случаи.
+          <span class="ex"><strong>Медиана</strong> — значение ровно посередине: выстрой всех в ряд, медиана тот, кто стоит в центре.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">barh</code><span class="en">bar horizontal</span></div>
+        <p class="def">Столбики лёжа, горизонтально. Буква <code>h</code> на конце. Берут, когда подписи длинные и в вертикальный столбик не влезают.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">order=[...]</code></div>
+        <p class="def">Задаёт порядок столбиков в seaborn. Без него библиотека расставит по-своему.
+          <span class="ex"><code>sns.countplot(data=df, x="income", order=["&lt;=50K", "&gt;50K"])</code></span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Подписи у графика</span></div>
+        <p class="def"><code>plt.title()</code> заголовок · <code>plt.xlabel()</code> подпись снизу · <code>plt.ylabel()</code> подпись сбоку · <code>plt.show()</code> показать.
+          <span class="ex">График без заголовка и подписей — наполовину сделанная работа: человек смотрит и не понимает, что перед ним.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Связь ≠ причина</span><span class="en">correlation is not causation</span></div>
+        <p class="def">⚠️ Главная мысль анализа данных. График показывает, что два события <strong>ходят вместе</strong> — но не доказывает, что одно <strong>вызывает</strong> другое.
+          <span class="ex">Летом продают больше мороженого и чаще тонут люди. Связь есть. Но мороженое не топит — просто и то и другое бывает в жару.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Масштабирование</span><span class="en">scaling</span></div>
+        <p class="def">Приведение разных столбцов к общему диапазону, обычно 0–1. Нужно, потому что столбцы живут в разных масштабах: возраст до 90, а доход от инвестиций до 99 999.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Вектор</span><span class="en">vector</span></div>
+        <p class="def">Просто <strong>список чисел</strong>. Слово звучит страшно, а внутри ничего страшного: <code>[1, 2, 3, 4, 5]</code> — это вектор.
+          <span class="ex">Запомнить так: <strong>вектор = список чисел (list) = массив (array)</strong>. Три разных слова — одна и та же вещь.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Векторизация</span><span class="en">vectorization</span></div>
+        <p class="def">Делать математику <strong>со всем списком сразу</strong>, одной строкой, без цикла. Пишешь математику один раз — NumPy применяет её к каждому числу.
+          <span class="ex">Вместо цикла <code>for x in numbers: result.append(x * 2)</code> пишем просто <code>numbers * 2</code>. Один шаг вместо пяти.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Волшебная печать</span></div>
+        <p class="def">🎯 Аналогия для векторизации. Ты учитель, 100 учеников, каждому надо наклейку. <strong>Цикл</strong> — подойти к каждому, 100 походов. <strong>Векторизация</strong> — одна большая печать, шлёпнул, все 100 получили сразу.
+          <span class="ex">Векторизация — это волшебная печать. Сказал один раз — получили все, одновременно.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">np.array([...])</code></div>
+        <p class="def">Превращает обычный список Python в <strong>массив NumPy</strong>. Важно: вся магия векторизации работает только с массивом, с обычным списком — нет.
+          <span class="ex"><code>numbers = np.array([1, 2, 3, 4, 5])</code></span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Массив или список?</span></div>
+        <p class="def">Отличить можно по тому, как печатается: обычный список Python — <code>[15, 25, 35]</code>, <strong>с запятыми</strong>. Массив NumPy — <code>[15 25 35]</code>, <strong>без запятых</strong>.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Сложение двух массивов</span></div>
+        <p class="def">NumPy складывает их <strong>попарно, по местам</strong>: первое с первым, второе со вторым.
+          <span class="ex"><code>np.array([1,2,3]) + np.array([10,20,30])</code> → <code>[11 22 33]</code>, потому что 1+10=11, 2+20=22, 3+30=33.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Миллисекунда</span><span class="en">millisecond, мс</span></div>
+        <p class="def">Одна тысячная секунды. Этим мерят скорость кода.
+          <span class="ex">1 миллион чисел: цикл — 200 мс, NumPy — 2 мс. NumPy в 100 раз быстрее. Поэтому NumPy внутри любого AI-инструмента.</span></p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= CLAUDE ================= -->
+  <section class="group" id="ai">
+    <h2>Claude и модели</h2>
+    <p class="groupnote">Про помощника, с которым идёт вся учёба.</p>
+    <div class="entries">
+
+      <div class="entry">
+        <div class="key"><span class="ru">LLM</span><span class="en">Large Language Model, большая языковая модель</span></div>
+        <p class="def">Программа, обученная на огромном количестве текстов. Решает одну задачу: угадать следующий токен — и повторяет это много раз, пока не получится ответ. Claude, ChatGPT, Gemini — разные LLM разных компаний.
+          <span class="ex">Аналогия: человек, прочитавший миллион книг — не помнит каждую наизусть, но может продолжить любую мысль.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Модель</span><span class="en">model</span></div>
+        <p class="def">«Мозг» помощника. Разные модели — разный баланс ума и скорости: <strong>Opus</strong> — самая мощная, <strong>Sonnet</strong> — баланс, <strong>Haiku</strong> — самая быстрая и лёгкая, <strong>Fable</strong> — отдельная модель семейства Claude 5.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Слэш-команда</span><span class="en">slash command</span></div>
+        <p class="def">Команда, которую пишут прямо в чат, начинается со знака <code>/</code>. Это команда помощнику, а не компьютеру — в терминале она не работает.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">/model</code></div>
+        <p class="def">Открывает меню выбора модели. Выбранная сохраняется как основная для новых разговоров.</p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Токен</span><span class="en">token</span></div>
+        <p class="def">Кусочек текста, которыми модель читает и пишет. Не буква и не слово — долька, как у шоколадки. В среднем 1 токен ≈ 3–4 буквы.
+          <span class="ex">Зачем знать: у разговора есть лимит токенов («сколько модель держит в голове»), и оплата моделей считается в токенах — как счётчик на воду.</span></p>
+      </div>
+
+    </div>
+  </section>
+
   <p class="empty" id="empty">Ничего не нашлось. Попробуй другое слово.</p>
 
   <footer class="end">
-    Учебный словарь · пополняется по мере изучения · HTML, CSS, JavaScript, Git
+    Учебный словарь · пополняется по мере изучения · HTML, CSS, JavaScript, Git, Python, данные и ML
   </footer>
 
 </div>
 
 <script>
   (function () {
-    var input = document.getElementById('q');
-    var entries = Array.prototype.slice.call(document.querySelectorAll('.entry'));
-    var sections = Array.prototype.slice.call(document.querySelectorAll('section.group'));
-    var empty = document.getElementById('empty');
+    var input    = document.getElementById('q');
+    var clearBtn = document.getElementById('clear');
+    var countBox = document.getElementById('count');
+    var jump     = document.getElementById('jump');
+    var empty    = document.getElementById('empty');
 
+    var entries  = Array.prototype.slice.call(document.querySelectorAll('.entry'));
+    var sections = Array.prototype.slice.call(document.querySelectorAll('section.group'));
+    var cycles   = Array.prototype.slice.call(document.querySelectorAll('.cycle'));
+
+    // текст каждой карточки готовим один раз заранее, а не на каждую букву
     entries.forEach(function (el) {
-      el.dataset.text = el.textContent.toLowerCase();
+      el.searchText = el.textContent.toLowerCase().replace(/\s+/g, ' ');
     });
 
-    input.addEventListener('input', function () {
-      var q = input.value.trim().toLowerCase();
+    // слово «нашлось» склоняем по-русски: 1 слово, 2 слова, 5 слов
+    function slovo(n) {
+      var ost100 = n % 100;
+      var ost10 = n % 10;
+      if (ost100 >= 11 && ost100 <= 14) return 'слов';
+      if (ost10 === 1) return 'слово';
+      if (ost10 >= 2 && ost10 <= 4) return 'слова';
+      return 'слов';
+    }
+
+    function run() {
+      var q = input.value.trim().toLowerCase().replace(/\s+/g, ' ');
+      var searching = q.length > 0;
       var found = 0;
 
       entries.forEach(function (el) {
-        var hit = !q || el.dataset.text.indexOf(q) !== -1;
-        el.style.display = hit ? '' : 'none';
+        var hit = !searching || el.searchText.indexOf(q) !== -1;
+        // hidden вместо style.display — надёжнее и короче
+        el.hidden = !hit;
         if (hit) found++;
       });
 
+      // раздел прячем, если в нём не осталось ни одного найденного слова
       sections.forEach(function (sec) {
-        var visible = sec.querySelectorAll('.entry:not([style*="none"])').length;
-        sec.style.display = (q && visible === 0) ? 'none' : '';
+        var visible = 0;
+        var inside = sec.querySelectorAll('.entry');
+        for (var i = 0; i < inside.length; i++) {
+          if (!inside[i].hidden) { visible++; break; }
+        }
+        sec.hidden = searching && visible === 0;
       });
 
-      empty.style.display = (q && found === 0) ? 'block' : 'none';
+      // шпаргалки и ссылки-разделы при поиске только мешают — убираем
+      cycles.forEach(function (c) { c.hidden = searching; });
+      jump.hidden = searching;
+
+      countBox.hidden = !searching;
+      countBox.textContent = found > 0
+        ? 'Нашлось: ' + found + ' ' + slovo(found)
+        : '';
+
+      empty.style.display = (searching && found === 0) ? 'block' : 'none';
+      clearBtn.hidden = !searching;
+    }
+
+    input.addEventListener('input', run);
+    // 'search' срабатывает, когда на телефоне жмут «Поиск» на клавиатуре
+    input.addEventListener('search', run);
+
+    clearBtn.addEventListener('click', function () {
+      input.value = '';
+      run();
+      input.focus();
     });
+
+    // Esc тоже очищает — привычка с настоящих сайтов
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        input.value = '';
+        run();
+      }
+    });
+
+    run();
   })();
 </script>
+
+</body>
+</html>
