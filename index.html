@@ -202,6 +202,42 @@
     color: var(--accent-ink);
   }
 
+  /* ---------- режим поиска ----------
+     Пока в поле что-то напечатано, body получает класс .searching.
+     Всё, что отодвигает ответ вниз, на это время убирается:
+     большой заголовок страницы, описания разделов, широкие отступы.
+     Цель: найденное слово стоит сразу под полем ввода. */
+
+  body.searching header.top { display: none; }
+
+  body.searching .searchbar {
+    padding-top: .65rem;
+    border-bottom: none;
+  }
+
+  body.searching section.group { margin-top: 1.25rem; }
+
+  body.searching section.group > h2 {
+    font-size: 1rem;
+    font-family: var(--sans);
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin-bottom: .25rem;
+  }
+
+  body.searching section.group > p.groupnote { display: none; }
+
+  body.searching .entries { border-top: none; }
+
+  /* первое найденное слово подсвечиваем — сразу видно, куда смотреть */
+  body.searching .entry.first-hit {
+    background: var(--accent-soft);
+    border-radius: 4px;
+    padding-left: .6rem;
+    padding-right: .6rem;
+  }
+
   nav.jump {
     display: flex;
     flex-wrap: wrap;
@@ -2525,6 +2561,7 @@
     var countBox = document.getElementById('count');
     var jump     = document.getElementById('jump');
     var empty    = document.getElementById('empty');
+    var searchbar = document.querySelector('.searchbar');
 
     var entries  = Array.prototype.slice.call(document.querySelectorAll('.entry'));
     var sections = Array.prototype.slice.call(document.querySelectorAll('section.group'));
@@ -2549,13 +2586,23 @@
       var q = input.value.trim().toLowerCase().replace(/\s+/g, ' ');
       var searching = q.length > 0;
       var found = 0;
+      var firstHit = null;
 
       entries.forEach(function (el) {
         var hit = !searching || el.searchText.indexOf(q) !== -1;
         // hidden вместо style.display — надёжнее и короче
         el.hidden = !hit;
-        if (hit) found++;
+        el.classList.remove('first-hit');
+        if (hit) {
+          found++;
+          if (searching && firstHit === null) firstHit = el;
+        }
       });
+
+      if (firstHit) firstHit.classList.add('first-hit');
+
+      // главное: убираем сверху всё лишнее, чтобы ответ был на первых строчках
+      document.body.classList.toggle('searching', searching);
 
       // раздел прячем, если в нём не осталось ни одного найденного слова
       sections.forEach(function (sec) {
@@ -2578,6 +2625,15 @@
 
       empty.style.display = (searching && found === 0) ? 'block' : 'none';
       clearBtn.hidden = !searching;
+
+      // Если страница была прокручена вниз, ответ оказался бы за экраном.
+      // Поднимаем к полю ввода. Если уже наверху — ничего не произойдёт.
+      if (searching) {
+        var barTop = searchbar.getBoundingClientRect().top + window.pageYOffset;
+        if (window.pageYOffset > barTop) {
+          window.scrollTo(0, barTop);
+        }
+      }
     }
 
     input.addEventListener('input', run);
