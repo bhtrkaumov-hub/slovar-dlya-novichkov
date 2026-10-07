@@ -673,6 +673,17 @@
         <p class="def"><code>имя-программы --version</code> — установлена ли программа. Ответила версией — стоит. «Не является командой» — не стоит или опечатка.</p>
       </div>
 
+      <div class="entry">
+        <div class="key"><span class="ru">winget</span><span class="en">Windows Package Manager</span></div>
+        <p class="def">Магазин программ Windows, но без окошек — прямо в командной строке. Называешь программу, он сам качает её из интернета и ставит.
+          <span class="ex"><code>winget list --id ИМЯ</code> — что установлено · <code>winget upgrade --id ИМЯ</code> — обновить · <code>--id</code> задаёт точное имя пакета, чтобы winget не перепутал программу.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Версия и «Доступно»</span></div>
+        <p class="def">В ответе <code>winget list</code> два столбца: <strong>Версия</strong> — что стоит сейчас, <strong>Доступно</strong> — что можно поставить. Второй столбец пустой — обновлять нечего.</p>
+      </div>
+
     </div>
   </section>
 
@@ -2389,6 +2400,13 @@
           <span class="warnline">⚠️ Пиши <strong>полный путь</strong> к нужному Питону, а не просто <code>python</code>. Питонов на компьютере может быть несколько, и поставить надо ровно в тот, которым запускается твой файл. Иначе установится мимо, и ошибка останется.</span></p>
       </div>
 
+      <div class="entry">
+        <div class="key"><code class="chip">Access is denied</code></div>
+        <p class="def">«Доступ запрещён». Частая причина при обновлении: Windows хочет заменить файл программы новым, а файл <strong>прямо сейчас работает</strong> — запущенный файл заменить нельзя.
+          <span class="ex">Аналогия: нельзя заменить колесо, пока машина едет.</span>
+          <span class="warnline">⚠️ Лечение: закрыть программу → обновить → запустить снова. <strong>Программа не может обновить саму себя на ходу.</strong></span></p>
+      </div>
+
     </div>
   </section>
 
@@ -2634,6 +2652,12 @@
         <div class="key"><span class="ru">Токен</span><span class="en">token</span></div>
         <p class="def">Кусочек текста, которыми модель читает и пишет. Не буква и не слово — долька, как у шоколадки. В среднем 1 токен ≈ 3–4 буквы.
           <span class="ex">Зачем знать: у разговора есть лимит токенов («сколько модель держит в голове»), и оплата моделей считается в токенах — как счётчик на воду.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">claude update</code></div>
+        <p class="def">Проверяет, есть ли версия Claude Code новее, и ставит её. Если ответила <code>Claude is managed by winget</code> — значит сама ничего не ставит, а передаёт работу <strong>winget</strong>: обновлять надо командой <code>winget upgrade --id Anthropic.ClaudeCode</code>.
+          <span class="ex">Свою версию показывает <code>claude --version</code>. Обновление включается только после перезапуска программы.</span></p>
       </div>
 
     </div>
