@@ -1791,6 +1791,43 @@
           <span class="warnline">Ловушка: при копировании текста из чата слэши цепляются сами к знакам <code>#</code>, <code>*</code>, <code>-</code>. После вставки всегда проверяй файл через <code>Get-Content</code>.</span></p>
       </div>
 
+      <div class="entry">
+        <div class="key"><code class="chip">el.hidden = true</code></div>
+        <p class="def">Готовое свойство «спрятать элемент». Короче и надёжнее, чем <code>el.style.display = 'none'</code>, и проверять потом просто: <code>if (!el.hidden)</code>.
+          <span class="ex">В разметке можно поставить сразу: <code>&lt;button hidden&gt;</code> — элемент есть, но не виден, пока скрипт его не покажет.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Проверка через текст атрибута</span></div>
+        <p class="def">⚠️ Хрупкий приём, которого стоит избегать. Было так: <code>querySelectorAll('.entry:not([style*="none"])')</code> — «найди карточки, у которых в атрибуте <code>style</code> нет слова none».
+          <span class="ex">Почему плохо: проверяется не состояние элемента, а <strong>буквы в атрибуте</strong>. Поменяется запись стиля — проверка развалится молча.</span>
+          <span class="ex">Как надо: хранить состояние честно — <code>el.hidden</code> — и спрашивать <code>if (!el.hidden)</code>.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Поле ввода на телефоне — 16px</span></div>
+        <p class="def">⚠️ Если у поля ввода шрифт <strong>меньше 16px</strong>, Safari на iPhone сам приближает страницу, когда в поле тыкают. Дальше по странице невозможно попасть пальцем.
+          <span class="ex">Лечение: <code>font-size: 16px</code> у <code>input</code>. 16px — порог, при котором Safari не приближает.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">enterkeyhint="search"</code></div>
+        <p class="def">Подсказка телефону: что написать на кнопке клавиатуры вместо «Ввод». Со значением <code>search</code> появится «Поиск».
+          <span class="ex">Бывают ещё <code>go</code>, <code>send</code>, <code>next</code>, <code>done</code>.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Размер кнопки под палец</span></div>
+        <p class="def">Кнопку меньше ~35×35 пикселей пальцем не нажать уверенно. Мышкой — легко, пальцем — нет.
+          <span class="ex"><code>width: 2.2rem; height: 2.2rem;</code> ≈ 35px. Для телефона это минимум.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Склонение числительных</span></div>
+        <p class="def">Нельзя писать «Нашлось: 2 слов». По-русски смотрим на <strong>последнюю цифру</strong>: 1 → слово, 2–4 → слова, остальное → слов.
+          <span class="ex">Исключение: 11–14 всегда «слов», хотя кончаются на 1–4. Поэтому сначала проверяют остаток от деления на 100.</span></p>
+      </div>
+
     </div>
   </section>
 
@@ -2165,6 +2202,33 @@
           <span class="ex"><code>git add .</code> → <code>git commit -m "pervaya versiya"</code></span>
           <span class="ex"><code>git remote add origin АДРЕС</code> → <code>git push -u origin master</code></span>
           <span class="warnline">Новый проект — своя отдельная папка. Не создавай её внутри другого репозитория: Git начнёт считать её частью чужого проекта.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Файл ≠ сайт</span></div>
+        <p class="def">⚠️ Файл на компьютере и сайт в интернете — <strong>две разные вещи</strong>. Изменил файл — в интернете пока ничего не изменилось.
+          <span class="ex">Чтобы правка попала на сайт: <code>cp</code> в папку проекта → <code>git add</code> → <code>git commit</code> → <code>git push</code>.</span>
+          <span class="warnline">На этом попались: словарь на компьютере пополняли месяц, а на сайт не выкладывали. Поиск исправно искал новые слова и не находил — их на сайте просто не было. Выглядело как «поиск сломался».</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Шапка документа</span><span class="en">head</span></div>
+        <p class="def">Три строки, с которых обязана начинаться любая страница. Без них страница вроде работает — а на телефоне ломается.
+          <span class="ex"><code>&lt;!DOCTYPE html&gt;</code> · <code>&lt;meta charset="utf-8"&gt;</code> · <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code></span>
+          <span class="warnline">Артефакт дописывает шапку сам. Если скопировать такой файл на GitHub Pages как есть — шапки не будет, и дописать её придётся руками.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Режим совместимости</span><span class="en">quirks mode</span></div>
+        <p class="def">Что включает браузер, когда у страницы нет <code>&lt;!DOCTYPE html&gt;</code>: старые правила 90-х годов. CSS начинает вести себя не так, как задумано.
+          <span class="ex">Лечится одной строкой — поставить <code>&lt;!DOCTYPE html&gt;</code> самой первой строкой файла.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Почему без viewport ломается телефон</span></div>
+        <p class="def">🎯 Телефон считает, что сайт сделан для компьютера. Поэтому рисует страницу шириной <strong>≈980 точек</strong>, а потом <strong>уменьшает всю картинку</strong>, чтобы влезла в экран. Буквы становятся микроскопическими, поле ввода — полоска в пару миллиметров.
+          <span class="ex"><code>width=device-width</code> — «рисуй шириной <strong>моего</strong> экрана, а не выдуманных 980». <code>initial-scale=1</code> — «не уменьшай».</span>
+          <span class="ex">Аналогия: без viewport телефон печатает газету формата A1 и складывает её до размера спичечного коробка. Текст есть — читать нельзя.</span></p>
       </div>
 
     </div>
