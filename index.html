@@ -2353,6 +2353,42 @@
         <p class="def">Так бывает, если написать <code>git commit</code> без <code>-m</code>. Выход: <code>Esc</code>, потом <code>:q!</code>, потом <code>Enter</code>. Коммит отменится — просто повтори с подписью.</p>
       </div>
 
+      <div class="entry">
+        <div class="key"><code class="chip">IndentationError</code><span class="en">unexpected indent</span></div>
+        <p class="def">Лишние пробелы слева от строки. <strong>Отступ (indent)</strong> — пустое место слева, <strong>unexpected</strong> — «неожиданный».
+          <span class="ex">В Питоне отступ — это <strong>смысл</strong>, а не красота. Он значит «эта строка <strong>внутри</strong> чего-то»: внутри цикла, условия, функции.</span>
+          <span class="ex">Питон спрашивает: внутри <strong>чего</strong>? Если выше нет ни цикла, ни условия — внутри быть нечего, и он останавливается.</span>
+          <span class="warnline">Правило: строка не внутри чего-то — начинается <strong>вплотную к левому краю</strong>. Отступы внутри скобок (выравнивание таблицы) не считаются, там Питону всё равно.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">NameError: name 'np' is not defined</code></div>
+        <p class="def">Питон не знает это слово — ему никто не объяснял. Чаще всего <strong>забыл строку <code>import</code></strong>.
+          <span class="ex">Лечение: <code>import numpy as np</code> первой строкой файла.</span>
+          <span class="ex">🎯 Аналогия: ты на кухне. Нож и доска лежат на столе — бери и пользуйся. Миксер стоит в шкафу. Пока не достал — его для тебя нет, даже если он есть в доме. <code>import</code> = «достань из шкафа».</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">ModuleNotFoundError</code></div>
+        <p class="def">Строка <code>import</code> написана, но <strong>самой библиотеки нет на компьютере</strong>.
+          <span class="ex">Разница с предыдущей: <code>NameError</code> — забыл попросить. <code>ModuleNotFoundError</code> — попросил то, чего в доме нет.</span>
+          <span class="ex">Лечение: либо установить через <code>pip</code>, либо <strong>удалить лишний <code>import</code></strong>, если библиотека не нужна.</span>
+          <span class="warnline">Правило: подключай только то, чем пользуешься. Лишний <code>import</code> не помогает, зато роняет программу, если библиотеки нет.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Читай номер строки в ошибке</span></div>
+        <p class="def">🎯 Приём отладки. Номер строки показывает, <strong>докуда Питон успел дойти</strong>.
+          <span class="ex">Была ошибка в строке 1, стала в строке 2 — значит первая строка <strong>заработала</strong>. Сдвинулся номер вниз = прогресс, а не новая беда.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><code class="chip">python.exe -m pip install ИМЯ</code></div>
+        <p class="def">Установить библиотеку. <code>-m pip</code> — «запусти встроенный инструмент pip», <code>install</code> — «скачай и установи».
+          <span class="ex"><strong>pip</strong> — установщик библиотек. Магазин: называешь товар, он качает из интернета и кладёт куда надо. Успех виден по строке <code>Successfully installed ...</code></span>
+          <span class="warnline">⚠️ Пиши <strong>полный путь</strong> к нужному Питону, а не просто <code>python</code>. Питонов на компьютере может быть несколько, и поставить надо ровно в тот, которым запускается твой файл. Иначе установится мимо, и ошибка останется.</span></p>
+      </div>
+
     </div>
   </section>
 
@@ -2522,6 +2558,46 @@
         <div class="key"><span class="ru">Миллисекунда</span><span class="en">millisecond, мс</span></div>
         <p class="def">Одна тысячная секунды. Этим мерят скорость кода.
           <span class="ex">1 миллион чисел: цикл — 200 мс, NumPy — 2 мс. NumPy в 100 раз быстрее. Поэтому NumPy внутри любого AI-инструмента.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Бродкастинг</span><span class="en">broadcasting</span></div>
+        <p class="def">NumPy позволяет считать между массивами <strong>разных размеров</strong>, автоматически <strong>растягивая меньший</strong> под размер большего.
+          <span class="ex">Откуда слово: broadcasting — «вещание», рассылка одного многим. Как телебашня: один сигнал уходит в тысячи домов.</span>
+          <span class="ex"><code>arr + 10</code> — в массиве 5 чисел, а <code>10</code> одно. NumPy растягивает десятку: <code>[1 2 3 4 5] + [10 10 10 10 10]</code>.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Форма</span><span class="en">shape</span></div>
+        <p class="def">Размер массива. Пишется в скобках через запятую, порядок всегда <strong>сначала строки, потом столбцы</strong>.
+          <span class="ex"><code>(5, 3)</code> — 5 строк, 3 столбца. Таблица на 15 чисел.</span>
+          <span class="warnline">Когда измерение одно, пишут с запятой на конце: <code>(3,)</code>, а не <code>(3)</code>. Это просто ряд из трёх чисел, без строк и столбцов.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Три правила бродкастинга</span></div>
+        <p class="def">1 — формы сравниваются <strong>справа налево</strong>. 2 — если размер равен 1 или его нет, NumPy растягивает. 3 — если формы не сходятся, ошибка; NumPy не гадает.
+          <span class="ex"><code>(5,3)</code> + <code>(3,)</code> → ✅ растянули на каждую строку. <code>(5,3)</code> + <code>(5,1)</code> → ✅ растянули столбец. <code>(5,3)</code> + <code>(4,)</code> → ❌ 3 ≠ 4, растянуть нечего.</span>
+          <span class="ex">Совет из урока: не заучивай правила сейчас. Помни главное — меньший растягивается под больший. Правила придут с практикой.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Двойные скобки</span><code class="chip">[[...]]</code></div>
+        <p class="def">Так записывают таблицу в NumPy. Внешние скобки — вся таблица, внутренние — одна строка.
+          <span class="ex"><code>np.array([[80,70,90], [60,75,85]])</code> — две строки по три числа, форма <code>(2, 3)</code>.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Сравнение массива</span></div>
+        <p class="def">Бродкастинг работает не только с <code>+</code> и <code>*</code>, но и со <strong>сравнением</strong>. Получается массив из <code>True</code> и <code>False</code> — основной инструмент отбора данных.
+          <span class="ex"><code>temps &gt; 25</code> → <code>[False True False True False True]</code>. NumPy сравнил каждое число с 25.</span>
+          <span class="warnline"><code>&gt;</code> значит «строго больше»: <code>25 &gt; 25</code> это <code>False</code>. И пишется с большой буквы — <code>True</code>, <code>False</code>. С маленькой будет <code>NameError</code>.</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Точка после числа</span><span class="en">float</span></div>
+        <p class="def"><code>8.</code> вместо <code>8</code> значит <strong>дробное число</strong>. NumPy не смешивает: либо весь массив целый, либо весь дробный.
+          <span class="ex"><code>np.array([10,20,30,40]) * 0.8</code> → <code>[ 8. 16. 24. 32.]</code>. Умножили на дробное — весь результат стал дробным.</span></p>
       </div>
 
     </div>
