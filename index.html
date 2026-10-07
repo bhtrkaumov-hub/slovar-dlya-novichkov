@@ -65,6 +65,14 @@
 
   * { box-sizing: border-box; }
 
+  /* ⚠️ Обязательная строка.
+     Браузер прячет hidden своим правилом [hidden] { display: none }.
+     Но у нас .entry = display:grid, а nav.jump = display:flex —
+     наши правила сильнее встроенного, и элементы остаются видимыми.
+     !important возвращает hidden власть. Без этой строки поиск
+     считает правильно, но ничего не прячет. */
+  [hidden] { display: none !important; }
+
   body {
     margin: 0;
     background: var(--ground);
@@ -1830,7 +1838,16 @@
       <div class="entry">
         <div class="key"><code class="chip">el.hidden = true</code></div>
         <p class="def">Готовое свойство «спрятать элемент». Короче и надёжнее, чем <code>el.style.display = 'none'</code>, и проверять потом просто: <code>if (!el.hidden)</code>.
-          <span class="ex">В разметке можно поставить сразу: <code>&lt;button hidden&gt;</code> — элемент есть, но не виден, пока скрипт его не покажет.</span></p>
+          <span class="ex">В разметке можно поставить сразу: <code>&lt;button hidden&gt;</code> — элемент есть, но не виден, пока скрипт его не покажет.</span>
+          <span class="warnline">⚠️ Работает не всегда! Если у элемента в CSS прописан <code>display: grid</code> или <code>display: flex</code> — <code>hidden</code> молча перестаёт действовать. Лечится строкой <code>[hidden] { display: none !important; }</code>. См. «Почему hidden не сработал».</span></p>
+      </div>
+
+      <div class="entry">
+        <div class="key"><span class="ru">Почему hidden не сработал</span></div>
+        <p class="def">🎯 Ловушка, на которой мы потеряли время. Браузер прячет элементы своим встроенным правилом <code>[hidden] { display: none }</code>. Но если <strong>в нашем CSS</strong> у этого элемента написан <code>display: grid</code> или <code>flex</code> — наше правило перебивает встроенное, и элемент остаётся виден.
+          <span class="ex">Признак беды: счётчик пишет «Нашлось: 4 слова», а на экране всё подряд. Логика считает верно, прятать не умеет.</span>
+          <span class="ex">Лечение — одна строка в самом начале CSS: <code>[hidden] { display: none !important; }</code></span>
+          <span class="warnline">Почему перебивает: у <code>[hidden]</code> и у <code>.entry</code> одинаковая сила (вес 0-1-0), а при равной силе побеждает то правило, которое <strong>написано ниже</strong>. Наше ниже встроенного. <code>!important</code> ставит точку: оно сильнее любого обычного правила, где бы ни стояло.</span></p>
       </div>
 
       <div class="entry">
